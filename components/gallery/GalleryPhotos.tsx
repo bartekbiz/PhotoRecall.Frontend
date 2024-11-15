@@ -6,7 +6,7 @@ import AwesomeGallery, {GalleryRef, RenderItemInfo,} from 'react-native-awesome-
 import {Image} from 'expo-image';
 import Animated, {FadeInDown, FadeInUp, FadeOutDown, FadeOutUp,} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {NavParams} from "@/components/gallery/types";
+import {NavParams} from "@/constants/Types";
 
 const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ uri: string }>) => {
     return (
