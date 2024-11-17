@@ -3,7 +3,7 @@ import {NavigationContainer, NavigationIndependentTree} from '@react-navigation/
 import {createStackNavigator} from '@react-navigation/stack';
 import type {NavParams} from '@/constants/Types';
 import {GalleryHome} from '@/components/gallery/GalleryHome'
-import {Photos} from '@/components/gallery/GalleryPhotos';
+import {GalleryPhotoView} from '@/components/gallery/GalleryPhotoView';
 
 const Stack = createStackNavigator<NavParams>();
 
@@ -12,10 +12,13 @@ export const GalleryNavigator = () => {
         <NavigationIndependentTree>
             <NavigationContainer>
                 <Stack.Navigator screenOptions={{headerShown: false}}>
-                    <Stack.Screen name="Home" component={GalleryHome}/>
                     <Stack.Screen
-                        name="Photos"
-                        component={Photos}
+                        name="GalleryHome"
+                        component={GalleryHome}
+                    />
+                    <Stack.Screen
+                        name="GalleryPhotoView"
+                        component={GalleryPhotoView}
                         options={{
                             cardStyleInterpolator: ({current}) => ({
                                 cardStyle: {

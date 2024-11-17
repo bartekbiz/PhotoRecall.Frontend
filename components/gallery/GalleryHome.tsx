@@ -8,12 +8,11 @@ import Animated, {useAnimatedRef, useScrollViewOffset} from "react-native-reanim
 import {useBottomTabOverflow} from "@/components/ui/TabBarBackground";
 import {ThemedText} from "@/components/ThemedText";
 import BlurredTop from "@/components/gallery/BlurredTop";
-
 const {height} = Dimensions.get('window');
 
 const getRandomSize = function () {
-    const min = 400;
-    const max = 800;
+    const min = 1000;
+    const max = 2000;
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
@@ -27,6 +26,10 @@ export const GalleryHome = () => {
     const bottom = useBottomTabOverflow();
     const {navigate} = useNavigation<NavigationProp<NavParams>>();
 
+    const onContentSizeChange = () => {
+        scrollRef.current?.scrollToEnd();
+    }
+
     return (
         <ThemedView style={styles.container}>
             <ThemedView style={styles.titleContainer}>
@@ -39,13 +42,14 @@ export const GalleryHome = () => {
                 ref={scrollRef}
                 scrollEventThrottle={16}
                 scrollIndicatorInsets={{bottom}}
-                contentContainerStyle={{paddingBottom: bottom}}>
+                contentContainerStyle={{paddingBottom: bottom}}
+                onContentSizeChange={onContentSizeChange}>
 
                 <ThemedView style={styles.content}>
                     {images.map((uri, index) => (
                         <TouchableWithoutFeedback
                             key={uri}
-                            onPress={() => navigate('Photos', {index, images})}
+                            onPress={() => navigate('GalleryPhotoView', {index, images})}
                         >
                             <Image source={uri} style={styles.image}/>
                         </TouchableWithoutFeedback>
