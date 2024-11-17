@@ -1,15 +1,17 @@
-import {Tabs} from 'expo-router';
 import React from 'react';
-import {Platform} from 'react-native';
-
-import {HapticTab} from '@/components/HapticTab';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import {Colors} from '@/constants/Colors';
 import {useColorScheme} from '@/hooks/useColorScheme';
+import {useTabBar} from "@/context/TabBarContext";
+import {Colors} from "@/constants/Colors";
+import {HapticTab} from "@/components/HapticTab";
+import TabBarBackground from "@/components/ui/TabBarBackground";
+import {Platform} from "react-native";
+import {Tabs} from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import TabBar from "@/components/ui/TabBar";
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
+    const { isTabBarVisible } = useTabBar();
 
     return (
         <Tabs
@@ -25,6 +27,9 @@ export default function TabLayout() {
                     },
                     default: {},
                 }),
+            }}
+            tabBar={(props) => {
+                return <TabBar {...props} />;
             }}>
             <Tabs.Screen
                 name="index"
