@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {Dimensions, StyleSheet, TouchableWithoutFeedback, useColorScheme, View,} from 'react-native';
+import {Dimensions, StyleSheet, TouchableWithoutFeedback,} from 'react-native';
 import {Image} from 'expo-image';
 import type {NavParams} from '@/constants/Types';
 import {ThemedView} from "@/components/ThemedView";

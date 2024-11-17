@@ -1,8 +1,6 @@
 import {SearchBar} from "react-native-elements";
-import {StyleSheet, useColorScheme, type ViewProps} from "react-native";
+import {StyleSheet, useColorScheme} from "react-native";
 import {Colors} from "@/constants/Colors";
-import {useState} from "react";
-import {string} from "prop-types";
 
 export type ThemedSearchBarProps = {
     search: any;

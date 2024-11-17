@@ -1,11 +1,11 @@
-import {StyleSheet, View} from "react-native";
+import {StyleSheet} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import {BlurView} from "expo-blur";
 import MaskedView from "@react-native-masked-view/masked-view";
 import * as React from "react";
 
 
-export default function BlurredTop(){
+export default function BlurredTop() {
     return (
         <MaskedView
             style={styles.upperBlurContainer}
@@ -14,11 +14,11 @@ export default function BlurredTop(){
                     colors={['rgba(0, 0, 0, 1)', 'rgba(0,0,0, 0.9)',
                         'rgba(0,0,0, 0.8)', 'transparent']}
                     style={styles.upperBlur}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}/>
+                    start={{x: 0, y: 0}}
+                    end={{x: 0, y: 1}}/>
             }
         >
-            <BlurView style={styles.upperBlur} />
+            <BlurView style={styles.upperBlur}/>
         </MaskedView>
     );
 }
