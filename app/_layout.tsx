@@ -8,8 +8,9 @@ import 'react-native-reanimated';
 
 import {useColorScheme} from '@/hooks/useColorScheme';
 import {TabBarProvider} from "@/context/TabBarContext";
+import {SettingsProvider} from "@/context/SettingsContext";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+// Prevent the splash container from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -30,13 +31,15 @@ export default function RootLayout() {
 
     return (
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <TabBarProvider>
-                <Stack>
-                    <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-                    <Stack.Screen name="+not-found"/>
-                </Stack>
-                <StatusBar style="auto"/>
-            </TabBarProvider>
+            <SettingsProvider>
+                <TabBarProvider>
+                    <Stack>
+                        <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+                        <Stack.Screen name="+not-found"/>
+                    </Stack>
+                    <StatusBar style="auto"/>
+                </TabBarProvider>
+            </SettingsProvider>
         </ThemeProvider>
     );
 }
