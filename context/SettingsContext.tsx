@@ -1,7 +1,6 @@
-import {createContext, useContext, useState} from "react";
-import {number} from "prop-types";
+import {createContext, useContext, useEffect, useState} from "react";
 import {AppTheme} from "@/constants/Enums";
-import {useColorScheme} from "@/hooks/useColorScheme";
+import {Appearance, ColorSchemeName} from "react-native";
 
 export const SettingsContext = createContext({
     appTheme: AppTheme.system,
@@ -13,11 +12,36 @@ export const useSettings = () => {
 };
 
 export const SettingsProvider = ({children}: {children: React.ReactNode;}) => {
-    const [appTheme, setAppTheme] = useState(AppTheme.system);
+    const [appTheme, setAppTheme] = useState<AppTheme>(AppTheme.system);
+    let systemScheme: ColorSchemeName;
+    const [colorScheme, setColorScheme] = useState<ColorSchemeName>(systemScheme)
+
+    useEffect(() => {
+        systemScheme = Appearance.getColorScheme()
+    }, []);
+
+    useEffect(() => {
+        Appearance.setColorScheme(colorScheme)
+    }, [colorScheme]);
+
+    const toggleAppTheme = (value: AppTheme) => {
+        if (value === undefined || value === null){
+            value = AppTheme.system;
+        }
+
+        setAppTheme(value);
+
+        if (value === AppTheme.system){
+            setColorScheme(systemScheme);
+        }
+        else {
+            setColorScheme(value === AppTheme.dark ? 'dark' : 'light');
+        }
+    }
 
     const value = {
         appTheme,
-        setAppTheme: (value: AppTheme) => setAppTheme(value),
+        setAppTheme: (value: AppTheme) => toggleAppTheme(value),
     };
 
     return (
