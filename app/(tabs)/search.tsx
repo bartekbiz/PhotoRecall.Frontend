@@ -1,35 +1,76 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import {ThemedText} from '@/components/ThemedText';
-import {ThemedView} from '@/components/ThemedView';
 
 import ThemedSearchBar from "@/components/ThemedSearchBar";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {GalleryNavigator} from "@/components/gallery/GalleryNavigator";
+import * as React from "react";
+import TitleView from "@/components/TitleView";
+import {GalleryProvider, useGallery} from "@/context/GalleryContext";
+import {ThemedView} from "@/components/ThemedView";
+import {BlurView} from "expo-blur";
+import {BlurStyles} from "@/constants/Common"
+import {is} from "@babel/types";
 
-export default function SearchScreen() {
+export default function SearchScreenWrapper() {
+    return (
+        <GalleryProvider>
+            <SearchScreen/>
+        </GalleryProvider>
+    );
+}
+
+function SearchScreen() {
+    const [search, setSearch] = useState('');
+    const {setBottomToTop, setPaddingTop, isInPhotoMode} = useGallery();
+
+    useEffect(() => {
+        setBottomToTop(false);
+        setPaddingTop(234)
+    }, []);
+
+    return (
+        <TitleView
+            titleContent={<SearchTitle/>}
+            titleBackground={<BlurView style={BlurStyles.blurredTop}/>}
+            // hideTitle={isInPhotoMode}
+        >
+            <ThemedView style={[styles.container, isInPhotoMode? {zIndex: 2000} : {}]}>
+                <GalleryNavigator/>
+            </ThemedView>
+        </TitleView>
+    );
+}
+
+function SearchTitle() {
     const [search, setSearch] = useState('');
 
     return (
-        <ParallaxScrollView>
-            <ThemedView style={styles.titleContainer}>
-                <ThemedText type="title">Search</ThemedText>
-            </ThemedView>
+        <ThemedView style={styles.titleContainer}>
+            <ThemedText type="title">Search</ThemedText>
+
             <ThemedSearchBar
                 search={search}
                 setSearch={setSearch}
+                additionalStyles={styles.searchBar}
                 otherProps={{
                     placeholder: "Try searching dog..."
                 }}
             />
-        </ParallaxScrollView>
+        </ThemedView>
     );
 }
 
 const styles = StyleSheet.create({
-    titleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
+    container: {
+        flex: 1,
     },
+    titleContainer: {
+        flex: 1,
+        backgroundColor: 'transparent',
+    },
+    searchBar: {
+        paddingTop: 16,
+    }
 });
