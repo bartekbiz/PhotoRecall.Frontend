@@ -8,11 +8,12 @@ import {NavParams} from "@/constants/Types";
 import * as Haptics from "expo-haptics";
 import {Colors} from "@/constants/Colors";
 import {useTabBar} from "@/context/TabBarContext";
+import {useGallery} from "@/context/GalleryContext";
 
-const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ uri: string }>) => {
+const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ path: string }>) => {
     return (
         <Image
-            source={item.uri}
+            source={item.path}
             style={StyleSheet.absoluteFillObject}
             contentFit="contain"
             onLoad={(e: any) => {
@@ -25,6 +26,7 @@ const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ uri: string }>
 
 export const GalleryPhotoView = () => {
     const colorScheme = useColorScheme() ?? 'light';
+    const {setIsInPhotoMode} = useGallery()
     const { showTabBar, hideTabBar } = useTabBar();
     const {setParams, goBack} = useNavigation<NavigationProp<NavParams, 'GalleryPhotoView'>>();
     const isFocused = useIsFocused();
@@ -63,7 +65,7 @@ export const GalleryPhotoView = () => {
     const onScaleEnd = (scale: number) => {
         if (scale < 0.7) {
             setIsFocusMode(false);
-            goBack();
+            onClose();
         }
         else if (scale >= 0.7 && scale <= 1) {
             setIsFocusMode(false);
@@ -83,18 +85,23 @@ export const GalleryPhotoView = () => {
         }
     }
 
+    const onClose = () => {
+        setIsInPhotoMode(false);
+        goBack();
+    }
+
     return (
         <View style={styles.container}>
             <AwesomeGallery
                 ref={gallery}
-                data={params.images.map((uri: any) => ({uri}))}
-                keyExtractor={(item) => item.uri}
+                data={params.images.map((path: any) => ({path}))}
+                keyExtractor={(item) => item.path}
                 renderItem={renderItem}
                 initialIndex={params.index}
                 numToRender={3}
                 doubleTapInterval={150}
                 onIndexChange={onIndexChange}
-                onSwipeToClose={goBack}
+                onSwipeToClose={onClose}
                 onTap={onTap}
                 loop
                 onScaleStart={onScaleStart}
@@ -109,10 +116,10 @@ export const GalleryPhotoView = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     galleryDark: {
-        backgroundColor: Colors.dark.background
+        backgroundColor: Colors.dark.background,
     },
     galleryLight: {
         backgroundColor: Colors.light.background
