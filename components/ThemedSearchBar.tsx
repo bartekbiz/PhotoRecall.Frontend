@@ -1,14 +1,17 @@
 import {SearchBar} from "react-native-elements";
 import {StyleSheet, useColorScheme} from "react-native";
 import {Colors} from "@/constants/Colors";
+import {FieldStyles} from "@/constants/Common";
+import * as Haptics from "expo-haptics";
 
 export type ThemedSearchBarProps = {
     search: any;
     setSearch: (search: string) => void;
+    additionalStyles?: {};
     otherProps?: any;
 };
 
-export default function ThemedSearchBar({search, setSearch, otherProps}: ThemedSearchBarProps) {
+export default function ThemedSearchBar({search, setSearch, additionalStyles, otherProps}: ThemedSearchBarProps) {
     const colorScheme = useColorScheme() ?? 'light';
 
     const updateSearch = (text: string) => {
@@ -21,10 +24,12 @@ export default function ThemedSearchBar({search, setSearch, otherProps}: ThemedS
             onChangeText={updateSearch}
             value={search}
             platform="default"
-            containerStyle={styles.searchContainer}
+            containerStyle={[styles.searchContainer, additionalStyles]}
             inputContainerStyle={colorScheme === 'dark' ?
                 styles.searchInputContainerDark : styles.searchInputContainerLight}
-            // placeholderTextColor="gray"
+            placeholderTextColor={colorScheme === 'dark' ? Colors.dark.text : Colors.light.text}
+            style={{color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text}}
+            searchIcon={{color: colorScheme === 'dark' ? Colors.dark.text : Colors.light.text}}
             {...otherProps}
         />
     );
@@ -40,14 +45,13 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     searchInputContainerLight: {
-        backgroundColor: '#FFF',
-        borderColor: Colors.light.border,
-        borderWidth: 1,
-        borderBottomWidth: 1,
-        borderRadius: 10,
+        backgroundColor: Colors.light.field,
+        color: Colors.light.text,
+        borderRadius: FieldStyles.common.borderRadius,
     },
     searchInputContainerDark: {
-        backgroundColor: '#FFF',
-        borderRadius: 10,
+        backgroundColor: Colors.dark.field,
+        color: Colors.dark.text,
+        borderRadius: FieldStyles.common.borderRadius,
     },
 });
