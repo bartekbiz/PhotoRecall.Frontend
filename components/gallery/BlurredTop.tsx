@@ -5,10 +5,10 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import * as React from "react";
 
 
-export default function BlurredTop() {
+export default function BlurredTop({style}: any) {
     return (
         <MaskedView
-            style={styles.upperBlurContainer}
+            style={style}
             maskElement={
                 <LinearGradient
                     colors={['rgba(0, 0, 0, 1)', 'rgba(0,0,0, 0.9)',
@@ -24,14 +24,6 @@ export default function BlurredTop() {
 }
 
 const styles = StyleSheet.create({
-    upperBlurContainer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '16%',
-        zIndex: 1000,
-    },
     upperBlur: {
         flex: 1,
         width: '100%',
