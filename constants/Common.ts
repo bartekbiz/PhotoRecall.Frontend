@@ -1,5 +1,14 @@
 import {StyleSheet} from "react-native";
 
+export const ScreenStyles = StyleSheet.create({
+    items: {padding: 32}
+})
+
+export const ZIndexes = StyleSheet.create({
+    modal: {zIndex: 1000},
+    modalItem: {zIndex: 1001}
+})
+
 export const BlurStyles = StyleSheet.create({
     blurredTop: {
         position: 'absolute',

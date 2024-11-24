@@ -11,7 +11,7 @@ import TabBar from "@/components/ui/TabBar";
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
-    const { isTabBarVisible } = useTabBar();
+    const {isTabBarVisible} = useTabBar();
 
     return (
         <Tabs

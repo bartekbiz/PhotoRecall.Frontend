@@ -3,9 +3,9 @@ import {StyleSheet} from 'react-native';
 import {GalleryNavigator} from "@/components/gallery/GalleryNavigator";
 import {ThemedView} from "@/components/ThemedView";
 import * as React from "react";
+import {useEffect} from "react";
 import {ThemedText} from "@/components/ThemedText";
 import {GalleryProvider, useGallery} from "@/context/GalleryContext";
-import {useEffect} from "react";
 import TitleView from "@/components/TitleView";
 import {BlurView} from "expo-blur";
 import {BlurStyles} from "@/constants/Common"
@@ -31,7 +31,7 @@ function PhotosScreen() {
             titleContent={<PhotosTitle/>}
             titleBackground={<BlurView style={BlurStyles.blurredTop}/>}
         >
-            <ThemedView style={[styles.container, isInPhotoMode? {zIndex: 2000} : {}]}>
+            <ThemedView style={[styles.container, isInPhotoMode ? {zIndex: 2000} : {}]}>
                 <GalleryNavigator/>
             </ThemedView>
         </TitleView>

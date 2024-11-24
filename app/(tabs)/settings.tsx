@@ -7,18 +7,26 @@ import {ThemedText} from '@/components/ThemedText';
 import {ThemedView} from '@/components/ThemedView';
 import {useSettings} from "@/context/SettingsContext";
 import {AppTheme} from "@/constants/Enums";
-import React from "react";
-import ThemedDropdown from "@/components/ThemedDropdown";
-import {DropdownItem} from "@/constants/Types";
+import React, {useState} from "react";
+import Dropdown from "@/components/Dropdown/Dropdown";
+import {DropdownItemType} from "@/constants/Types";
+import {ToTitleCase} from "@/utils/Utils";
 
-const appThemes: DropdownItem[] = [
-    {title: AppTheme[AppTheme.system], value: AppTheme.system},
-    {title: AppTheme[AppTheme.dark], value: AppTheme.dark},
-    {title: AppTheme[AppTheme.light], value: AppTheme.light},
+const appThemes: DropdownItemType[] = [
+    {title: ToTitleCase(AppTheme[AppTheme.system]), value: AppTheme.system, selected: true},
+    {title: ToTitleCase(AppTheme[AppTheme.dark]), value: AppTheme.dark, selected: false},
+    {title: ToTitleCase(AppTheme[AppTheme.light]), value: AppTheme.light, selected: false},
+];
+
+const yoloModels: DropdownItemType[] = [
+    {title: 'yolov7x.pt', value: 'yolov7x.pt', selected: true},
+    {title: 'yolo11x.pt', value: 'yolo11x.pt', selected: true},
+    {title: 'yolov9e.pt', value: 'yolov9e.pt', selected: true},
 ];
 
 export default function SettingsScreen() {
     const {appTheme, setAppTheme} = useSettings();
+    const [yoloModelsList, setYoloModelsList] = useState<DropdownItemType[]>(yoloModels);
 
     return (
         <ParallaxScrollView>
@@ -26,11 +34,16 @@ export default function SettingsScreen() {
                 <ThemedText type="title">Settings</ThemedText>
             </ThemedView>
 
-            <ThemedDropdown
+            <Dropdown
                 data={appThemes}
-                title={"App theme: "}
-                currentItem={AppTheme[appTheme]}
-                setItem={setAppTheme}
+                title={"App themes"}
+                isMultiselect={false}
+            />
+
+            <Dropdown
+                data={yoloModelsList}
+                title={"Yolo models"}
+                isMultiselect={true}
             />
 
             <Collapsible title="File-based routing">
@@ -52,12 +65,6 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-    headerImage: {
-        color: '#808080',
-        bottom: -90,
-        left: -35,
-        position: 'absolute',
-    },
     titleContainer: {
         flexDirection: 'row',
         gap: 2,

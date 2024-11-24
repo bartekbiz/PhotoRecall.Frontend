@@ -3,6 +3,7 @@ import Animated, {interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOf
 
 import {ThemedView} from '@/components/ThemedView';
 import {useBottomTabOverflow} from '@/components/ui/TabBarBackground';
+import {ScreenStyles} from "@/constants/Common";
 
 const HEADER_HEIGHT = 250;
 
@@ -53,8 +54,8 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        padding: 32,
+        padding: ScreenStyles.items.padding,
         gap: 16,
-        overflow: 'hidden',
+        // overflow: 'hidden',
     },
 });

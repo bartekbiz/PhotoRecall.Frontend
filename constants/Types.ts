@@ -4,7 +4,9 @@ export type NavParams = {
     GalleryPhotoView: { images: string[]; index: number };
 };
 
-export type DropdownItem = {
+export type DropdownItemType = {
     title: string;
     value: any;
+    selected: boolean;
 }
+

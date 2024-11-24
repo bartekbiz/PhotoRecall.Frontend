@@ -1,17 +1,16 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {ThemedText} from '@/components/ThemedText';
 
 import ThemedSearchBar from "@/components/ThemedSearchBar";
+import * as React from "react";
 import {useEffect, useState} from "react";
 import {GalleryNavigator} from "@/components/gallery/GalleryNavigator";
-import * as React from "react";
 import TitleView from "@/components/TitleView";
 import {GalleryProvider, useGallery} from "@/context/GalleryContext";
 import {ThemedView} from "@/components/ThemedView";
 import {BlurView} from "expo-blur";
 import {BlurStyles} from "@/constants/Common"
-import {is} from "@babel/types";
 
 export default function SearchScreenWrapper() {
     return (
@@ -36,7 +35,7 @@ function SearchScreen() {
             titleBackground={<BlurView style={BlurStyles.blurredTop}/>}
             // hideTitle={isInPhotoMode}
         >
-            <ThemedView style={[styles.container, isInPhotoMode? {zIndex: 2000} : {}]}>
+            <ThemedView style={[styles.container, isInPhotoMode ? {zIndex: 2000} : {}]}>
                 <GalleryNavigator/>
             </ThemedView>
         </TitleView>
