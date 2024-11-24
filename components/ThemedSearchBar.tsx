@@ -2,7 +2,6 @@ import {SearchBar} from "react-native-elements";
 import {StyleSheet, useColorScheme} from "react-native";
 import {Colors} from "@/constants/Colors";
 import {FieldStyles} from "@/constants/Common";
-import * as Haptics from "expo-haptics";
 
 export type ThemedSearchBarProps = {
     search: any;

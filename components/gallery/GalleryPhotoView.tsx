@@ -27,7 +27,7 @@ const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ path: string }
 export const GalleryPhotoView = () => {
     const colorScheme = useColorScheme() ?? 'light';
     const {setIsInPhotoMode} = useGallery()
-    const { showTabBar, hideTabBar } = useTabBar();
+    const {showTabBar, hideTabBar} = useTabBar();
     const {setParams, goBack} = useNavigation<NavigationProp<NavParams, 'GalleryPhotoView'>>();
     const isFocused = useIsFocused();
     const {params} = useRoute<RouteProp<NavParams, 'GalleryPhotoView'>>();
@@ -47,8 +47,7 @@ export const GalleryPhotoView = () => {
         if (isFocusMode) {
             StatusBar.setHidden(true, statusBarAnimation);
             hideTabBar();
-        }
-        else {
+        } else {
             StatusBar.setHidden(false, statusBarAnimation);
             showTabBar();
         }
@@ -66,12 +65,10 @@ export const GalleryPhotoView = () => {
         if (scale < 0.7) {
             setIsFocusMode(false);
             onClose();
-        }
-        else if (scale >= 0.7 && scale <= 1) {
+        } else if (scale >= 0.7 && scale <= 1) {
             setIsFocusMode(false);
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        }
-        else {
+        } else {
             setIsFocusMode(true);
         }
     }
@@ -79,8 +76,7 @@ export const GalleryPhotoView = () => {
     const onDoubleTap = (toScale: any) => {
         if (toScale === 1) {
             setIsFocusMode(false);
-        }
-        else {
+        } else {
             setIsFocusMode(true);
         }
     }

@@ -1,4 +1,3 @@
-
 export enum AppTheme {
     system = 0,
     dark = 1,

@@ -1,17 +1,17 @@
-import {createContext, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useState} from "react";
 import {AppTheme} from "@/constants/Enums";
-import {Appearance, ColorSchemeName} from "react-native";
 
 export const SettingsContext = createContext({
     appTheme: AppTheme.system,
-    setAppTheme: (value: AppTheme) => {},
+    setAppTheme: (value: AppTheme) => {
+    },
 });
 
 export const useSettings = () => {
     return useContext(SettingsContext);
 };
 
-export const SettingsProvider = ({children}: {children: React.ReactNode;}) => {
+export const SettingsProvider = ({children}: { children: React.ReactNode; }) => {
     const [appTheme, setAppTheme] = useState<AppTheme>(AppTheme.system);
     // let systemScheme: ColorSchemeName;
     // const [colorScheme, setColorScheme] = useState<ColorSchemeName>(systemScheme)

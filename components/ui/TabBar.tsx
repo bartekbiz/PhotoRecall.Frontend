@@ -1,9 +1,9 @@
 import React from "react";
-import { BottomTabBar, BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { useTabBar } from "@/context/TabBarContext";
+import {BottomTabBar, BottomTabBarProps} from "@react-navigation/bottom-tabs";
+import {useTabBar} from "@/context/TabBarContext";
 
 const TabBar: React.FC<BottomTabBarProps> = (props: BottomTabBarProps) => {
-    const { isTabBarVisible } = useTabBar();
+    const {isTabBarVisible} = useTabBar();
 
     if (!isTabBarVisible) {
         return null;

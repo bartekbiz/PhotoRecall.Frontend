@@ -4,7 +4,7 @@ import {Dimensions, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {Image} from 'expo-image';
 import type {NavParams} from '@/constants/Types';
 import {ThemedView} from "@/components/ThemedView";
-import Animated, {useAnimatedRef, useScrollViewOffset} from "react-native-reanimated";
+import Animated, {useAnimatedRef} from "react-native-reanimated";
 import {useBottomTabOverflow} from "@/components/ui/TabBarBackground";
 import {useGallery} from "@/context/GalleryContext";
 

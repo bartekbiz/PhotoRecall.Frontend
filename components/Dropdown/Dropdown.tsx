@@ -1,9 +1,8 @@
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
-import React, {ReactNode, useEffect, useState} from "react";
-import {LayoutRectangle, Modal, ScrollView, StyleSheet, useColorScheme,} from "react-native";
+import React, {useState} from "react";
+import {Modal, ScrollView, StyleSheet, useColorScheme,} from "react-native";
 import Entypo from '@expo/vector-icons/Entypo';
-import * as Haptics from "expo-haptics";
 import {Colors} from '@/constants/Colors'
 import {FieldStyles, ScreenStyles, TextStyles, ZIndexes} from "@/constants/Common";
 import {DropdownItemType} from "@/constants/Types";
@@ -11,7 +10,6 @@ import {BlurView} from "expo-blur";
 import DropdownItem from "@/components/Dropdown/DropdownItem";
 import {dropdownStyles} from "@/constants/Dropdown";
 import ThemedDivider from "@/components/ThemedDivider";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {useDropdown} from "@/hooks/useDropdown";
 
 
