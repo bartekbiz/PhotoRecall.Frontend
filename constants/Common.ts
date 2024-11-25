@@ -1,7 +1,10 @@
 import {StyleSheet} from "react-native";
 
 export const ScreenStyles = StyleSheet.create({
-    items: {padding: 32}
+    items: {
+        padding: 32,
+        gap: 20,
+    }
 })
 
 export const ZIndexes = StyleSheet.create({
