@@ -1,10 +1,18 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext} from "react";
 import {AppTheme} from "@/constants/Enums";
+import {useAppTheme} from "@/hooks/useAppTheme";
+import {DropdownItemType} from "@/constants/Types";
+import {useYoloModels} from "@/hooks/useYoloModels";
 
 export const SettingsContext = createContext({
-    appTheme: AppTheme.system,
-    setAppTheme: (value: AppTheme) => {
-    },
+    theme: AppTheme.system,
+    setTheme: (value: AppTheme) => {},
+    themesDropdown: [{title: '', value: '', selected: false}],
+    setThemesDropdown: (value: DropdownItemType[]) => {},
+    yoloModels: [''],
+    setYoloModels: (value: string[]) => {},
+    yoloModelsDropdown: [{title: '', value: '', selected: false}],
+    setYoloModelsDropdown: (value: DropdownItemType[]) => {},
 });
 
 export const useSettings = () => {
@@ -12,36 +20,18 @@ export const useSettings = () => {
 };
 
 export const SettingsProvider = ({children}: { children: React.ReactNode; }) => {
-    const [appTheme, setAppTheme] = useState<AppTheme>(AppTheme.system);
-    // let systemScheme: ColorSchemeName;
-    // const [colorScheme, setColorScheme] = useState<ColorSchemeName>(systemScheme)
-
-    // useEffect(() => {
-    //     systemScheme = Appearance.getColorScheme()
-    // }, []);
-    //
-    // useEffect(() => {
-    //     Appearance.setColorScheme(colorScheme)
-    // }, [colorScheme]);
-
-    // const toggleAppTheme = (value: AppTheme) => {
-    //     if (value === undefined || value === null){
-    //         value = AppTheme.system;
-    //     }
-    //
-    //     setAppTheme(value);
-    //
-    //     if (value === AppTheme.system){
-    //         setColorScheme(systemScheme);
-    //     }
-    //     else {
-    //         setColorScheme(value === AppTheme.dark ? 'dark' : 'light');
-    //     }
-    // }
+    const {theme, setTheme, themesDropdown, setThemesDropdown} = useAppTheme();
+    const {yoloModels, setYoloModels, yoloModelsDropdown, setYoloModelsDropdown} = useYoloModels();
 
     const value = {
-        appTheme,
-        setAppTheme: (value: AppTheme) => setAppTheme(value),
+        theme,
+        setTheme,
+        themesDropdown,
+        setThemesDropdown,
+        yoloModels,
+        setYoloModels,
+        yoloModelsDropdown,
+        setYoloModelsDropdown
     };
 
     return (
