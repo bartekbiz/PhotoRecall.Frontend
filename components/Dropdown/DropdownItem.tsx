@@ -11,25 +11,19 @@ import {dropdownStyles} from "@/constants/Dropdown";
 
 type DropdownItemProps = {
     item: DropdownItemType;
-    items: DropdownItemType[];
-    onChangeSelection: () => void;
+    onChangeSelection: (item: DropdownItemType) => void;
 };
 
-export default function DropdownItem({item, items, onChangeSelection}: DropdownItemProps) {
+export default function DropdownItem({item, onChangeSelection}: DropdownItemProps) {
     const colorScheme = useColorScheme() ?? 'light';
     const [_, setSelected] = useState<boolean>(item.selected)
     const [cancelSelect, setCancelSelect] = useState<boolean>(false)
 
-    useEffect(() => {
-
-    }, [items]);
-
     const onTouchEnd = () => {
         if (cancelSelect) return;
 
-        onChangeSelection();
-
         item.selected = !item.selected;
+        onChangeSelection(item);
         setSelected(item.selected);
 
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
