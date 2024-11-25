@@ -14,15 +14,14 @@ import {useDropdown} from "@/hooks/useDropdown";
 
 
 export type DropdownBaseProps = {
-    data: DropdownItemType[];
+    items: DropdownItemType[];
+    setItems: (items: DropdownItemType[]) => void;
     title: string;
     isMultiselect: boolean;
-    // setData: (data: MultiselectItemType[]) => void;
 };
 
-export default function Dropdown({data, title, isMultiselect}: DropdownBaseProps) {
+export default function Dropdown({items, setItems, title, isMultiselect}: DropdownBaseProps) {
     const colorScheme = useColorScheme() ?? 'light';
-    const [items, setItems] = useState(data)
 
     const {
         isOpened, openClose, close,
@@ -30,12 +29,17 @@ export default function Dropdown({data, title, isMultiselect}: DropdownBaseProps
         top,
     } = useDropdown();
 
-    const onChangeSelection = () => {
-        if (isMultiselect) return;
+    const onChangeSelection = (item: DropdownItemType) => {
+        setItems(items.map(x => {
+            if (x.value === item.value) {
+                x.selected = item.selected;
+            }
+            else if (!isMultiselect){
+                x.selected = false;
+            }
 
-        let newItems = items.map(x => x);
-        newItems.forEach(x => x.selected = false);
-        setItems(newItems);
+            return x;
+        }));
     }
 
     const renderButton = (style?: any) => {
@@ -79,7 +83,7 @@ export default function Dropdown({data, title, isMultiselect}: DropdownBaseProps
                         <ThemedView
                             style={{
                                 position: 'absolute',
-                                top: top + dropdownLayout.y - 14,
+                                top: dropdownLayout.y + top - 14,
                                 left: 0,
                                 width: '100%',
                                 paddingHorizontal: ScreenStyles.items.padding,
@@ -95,7 +99,7 @@ export default function Dropdown({data, title, isMultiselect}: DropdownBaseProps
                         <ThemedView style={styles.menuContainer}>
                             <ScrollView style={[styles.menuStyle,
                                 {
-                                    top: top + dropdownLayout.y + FieldStyles.common.height,
+                                    top: dropdownLayout.y + top + FieldStyles.common.height + 4,
                                     left: dropdownLayout.x
                                 },
                                 colorScheme === 'dark' ?
@@ -108,7 +112,6 @@ export default function Dropdown({data, title, isMultiselect}: DropdownBaseProps
                                         <ThemedView key={index}>
                                             <DropdownItem
                                                 item={item}
-                                                items={items}
                                                 onChangeSelection={onChangeSelection}
                                             />
 
