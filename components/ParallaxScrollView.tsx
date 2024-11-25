@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         padding: ScreenStyles.items.padding,
-        gap: 16,
+        gap: ScreenStyles.items.gap,
         // overflow: 'hidden',
     },
 });
