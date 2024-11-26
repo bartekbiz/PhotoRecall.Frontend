@@ -12,9 +12,10 @@ import {dropdownStyles} from "@/constants/Dropdown";
 type DropdownItemProps = {
     item: DropdownItemType;
     onChangeSelection: (item: DropdownItemType) => void;
+    isMultiselect: boolean;
 };
 
-export default function DropdownItem({item, onChangeSelection}: DropdownItemProps) {
+export default function DropdownItem({item, onChangeSelection, isMultiselect}: DropdownItemProps) {
     const colorScheme = useColorScheme() ?? 'light';
     const [_, setSelected] = useState<boolean>(item.selected)
     const [cancelSelect, setCancelSelect] = useState<boolean>(false)
@@ -22,7 +23,11 @@ export default function DropdownItem({item, onChangeSelection}: DropdownItemProp
     const onTouchEnd = () => {
         if (cancelSelect) return;
 
-        item.selected = !item.selected;
+        if (!isMultiselect)
+            item.selected = true
+        else
+            item.selected = !item.selected;
+
         onChangeSelection(item);
         setSelected(item.selected);
 
