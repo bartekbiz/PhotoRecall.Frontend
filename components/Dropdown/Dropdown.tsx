@@ -1,7 +1,8 @@
 import {ThemedText} from "@/components/ThemedText";
 import {ThemedView} from "@/components/ThemedView";
-import React, {useState} from "react";
-import {Modal, ScrollView, StyleSheet, useColorScheme,} from "react-native";
+import React from "react";
+import {ScrollView, StyleSheet, useColorScheme,} from "react-native";
+import Modal from "react-native-modal";
 import Entypo from '@expo/vector-icons/Entypo';
 import {Colors} from '@/constants/Colors'
 import {FieldStyles, ScreenStyles, TextStyles, ZIndexes} from "@/constants/Common";
@@ -70,38 +71,36 @@ export default function Dropdown({items, setItems, title, isMultiselect}: Dropdo
             <>
                 {isOpened && dropdownLayout !== undefined &&
                     <Modal
-                        transparent={true}
-                        onRequestClose={close}
-                        animationType={'fade'}
-                        visible={isOpened}
-                    >
+                        customBackdrop={
                         <BlurView
-                            style={[styles.blurView, {width: '100%', height: '100%'}]}
+                            style={[styles.blurView]}
                             onTouchStart={close}
-                        />
-
-                        <ThemedView
-                            style={{
-                                position: 'absolute',
-                                top: dropdownLayout.y + top - 14,
-                                left: 0,
-                                width: '100%',
-                                paddingHorizontal: ScreenStyles.items.padding,
-                                backgroundColor: 'transparent'
-                            }}
-                        >
+                        />}
+                        backdropOpacity={1}
+                        useNativeDriver={true}
+                        hideModalContentWhileAnimating={true}
+                        animationIn={"fadeIn"}
+                        animationOut={'fadeOut'}
+                        isVisible={isOpened}
+                        supportedOrientations={['portrait']}
+                        backdropTransitionOutTiming={0}
+                        coverScreen={true}
+                        style={{margin:0}}
+                    >
+                        <ThemedView style={{
+                            position: 'absolute',
+                            top: dropdownLayout.y + top - 14,
+                            left: 0,
+                            width: '100%',
+                            paddingHorizontal: ScreenStyles.items.padding,
+                            backgroundColor: 'transparent'
+                        }}>
                             {renderButton({
                                     zIndex: ZIndexes.modalItem.zIndex
                                 }
                             )}
-                        </ThemedView>
 
-                        <ThemedView style={styles.menuContainer}>
                             <ScrollView style={[styles.menuStyle,
-                                {
-                                    top: dropdownLayout.y + top + FieldStyles.common.height + 4,
-                                    left: dropdownLayout.x
-                                },
                                 colorScheme === 'dark' ?
                                     {backgroundColor: Colors.dark.field} :
                                     {backgroundColor: Colors.light.field}
@@ -113,6 +112,7 @@ export default function Dropdown({items, setItems, title, isMultiselect}: Dropdo
                                             <DropdownItem
                                                 item={item}
                                                 onChangeSelection={onChangeSelection}
+                                                isMultiselect={isMultiselect}
                                             />
 
                                             {index !== items.length - 1 && <ThemedDivider/>}
@@ -121,7 +121,6 @@ export default function Dropdown({items, setItems, title, isMultiselect}: Dropdo
                                 })}
                             </ScrollView>
                         </ThemedView>
-
                     </Modal>
                 }
             </>
@@ -132,7 +131,7 @@ export default function Dropdown({items, setItems, title, isMultiselect}: Dropdo
         <>
             <ThemedView
                 style={styles.container}
-                onLayout={(event) => {
+                onLayout={(event: any) => {
                     setDropdownLayout(event.nativeEvent.layout);
                 }}
             >{renderButton()}
@@ -156,20 +155,11 @@ const styles = StyleSheet.create({
         fontSize: TextStyles.default.fontSize,
     },
     blurView: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        flex: 1,
         zIndex: ZIndexes.modal.zIndex
     },
-    menuContainer: {
-        width: '100%',
-        paddingHorizontal: ScreenStyles.items.padding,
-    },
     menuStyle: {
-        position: 'absolute',
-        marginTop: 2,
+        marginTop: ScreenStyles.items.gap,
         overflow: 'hidden',
         width: '100%',
         borderRadius: FieldStyles.common.borderRadius,
