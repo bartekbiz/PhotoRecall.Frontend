@@ -26,6 +26,8 @@ export const GalleryNavigator = () => {
                                 },
                             }),
                             gestureEnabled: false,
+                            // presentation: 'card',
+                            // animation: 'none',
                         }}
                     />
                 </Stack.Navigator>
