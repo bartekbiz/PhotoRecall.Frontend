@@ -10,7 +10,7 @@ import TitleView from "@/components/TitleView";
 import {BlurView} from "expo-blur";
 import {BlurStyles} from "@/constants/Common"
 
-export default function PhotosScreenWrapper() {
+export default function Index() {
     return (
         <GalleryProvider>
             <PhotosScreen/>
@@ -30,8 +30,9 @@ function PhotosScreen() {
         <TitleView
             titleContent={<PhotosTitle/>}
             titleBackground={<BlurView style={BlurStyles.blurredTop}/>}
+            hideTitle={isInPhotoMode}
         >
-            <ThemedView style={[styles.container, isInPhotoMode ? {zIndex: 2000} : {}]}>
+            <ThemedView style={[styles.container]}>
                 <GalleryNavigator/>
             </ThemedView>
         </TitleView>

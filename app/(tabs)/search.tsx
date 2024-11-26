@@ -33,9 +33,9 @@ function SearchScreen() {
         <TitleView
             titleContent={<SearchTitle/>}
             titleBackground={<BlurView style={BlurStyles.blurredTop}/>}
-            // hideTitle={isInPhotoMode}
+            hideTitle={isInPhotoMode}
         >
-            <ThemedView style={[styles.container, isInPhotoMode ? {zIndex: 2000} : {}]}>
+            <ThemedView style={styles.container}>
                 <GalleryNavigator/>
             </ThemedView>
         </TitleView>
