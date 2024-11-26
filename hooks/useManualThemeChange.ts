@@ -1,25 +1,32 @@
 import {Appearance, ColorSchemeName} from "react-native";
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import {AppTheme} from "@/constants/Enums";
 import {useSettings} from "@/context/SettingsContext";
 
 
 export const useManualThemeChange = () => {
     const {theme} = useSettings();
-    let systemScheme: ColorSchemeName;
-    const [colorScheme, setColorScheme] = useState<ColorSchemeName>()
+    const [isDark, setIsDarkState] = useState<boolean>(true)
+
+    useLayoutEffect(() => {
+        Appearance.setColorScheme(getScheme())
+    }, [isDark]);
 
     useEffect(() => {
-        systemScheme = Appearance.getColorScheme();
-        setColorScheme(systemScheme);
-    }, []);
+        Appearance.setColorScheme(getScheme())
+    });
 
     useEffect(() => {
-        // @ts-ignore
-        setColorScheme(theme === AppTheme.system ? systemScheme : AppTheme[theme])
-    }, [theme, systemScheme]);
+        //@ts-ignore
+        setIsDark(theme === AppTheme.system ? true : AppTheme[theme])
+    }, [theme]);
 
-    useEffect(() => {
-        Appearance.setColorScheme(colorScheme)
-    }, [colorScheme]);
+    const setIsDark = (value: boolean) => {
+        setIsDarkState(value);
+        Appearance.setColorScheme(getScheme())
+    }
+
+    const getScheme = () => {
+        return isDark ? 'dark' : 'light';
+    }
 }
