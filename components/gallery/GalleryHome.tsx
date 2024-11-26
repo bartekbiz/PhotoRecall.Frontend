@@ -33,7 +33,6 @@ export const GalleryHome = () => {
     };
 
     const onPress = (index: number, images: string[]) => {
-        setIsInPhotoMode(true);
         navigate('GalleryPhotoView', {index, images});
     };
 
@@ -44,8 +43,8 @@ export const GalleryHome = () => {
                 scrollEventThrottle={16}
                 scrollIndicatorInsets={{bottom}}
                 contentContainerStyle={{paddingBottom: bottom}}
-                onContentSizeChange={onContentSizeChange}>
-
+                onContentSizeChange={onContentSizeChange}
+            >
                 <ThemedView style={[
                     styles.content,
                     isBottomToTop ? styles.contentBottomToTop : styles.contentTopToBottom,

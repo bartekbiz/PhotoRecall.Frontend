@@ -9,12 +9,13 @@ import * as Haptics from "expo-haptics";
 import {Colors} from "@/constants/Colors";
 import {useTabBar} from "@/context/TabBarContext";
 import {useGallery} from "@/context/GalleryContext";
+import {ThemedView} from "@/components/ThemedView";
 
 const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ path: string }>) => {
     return (
         <Image
             source={item.path}
-            style={StyleSheet.absoluteFillObject}
+            style={[StyleSheet.absoluteFillObject]}
             contentFit="contain"
             onLoad={(e: any) => {
                 const {width, height} = e.source;
@@ -26,7 +27,7 @@ const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ path: string }
 
 export const GalleryPhotoView = () => {
     const colorScheme = useColorScheme() ?? 'light';
-    const {setIsInPhotoMode} = useGallery()
+    const {isInPhotoMode, setIsInPhotoMode} = useGallery()
     const {showTabBar, hideTabBar} = useTabBar();
     const {setParams, goBack} = useNavigation<NavigationProp<NavParams, 'GalleryPhotoView'>>();
     const isFocused = useIsFocused();
@@ -42,6 +43,10 @@ export const GalleryPhotoView = () => {
         },
         [isFocused, setParams]
     );
+
+    useEffect(() => {
+        setIsInPhotoMode(true);
+    }, []);
 
     useEffect(() => {
         if (isFocusMode) {
@@ -82,12 +87,13 @@ export const GalleryPhotoView = () => {
     }
 
     const onClose = () => {
-        setIsInPhotoMode(false);
         goBack();
+        setIsFocusMode(false);
+        setIsInPhotoMode(false);
     }
 
     return (
-        <View style={styles.container}>
+        <ThemedView style={styles.container}>
             <AwesomeGallery
                 ref={gallery}
                 data={params.images.map((path: any) => ({path}))}
@@ -103,10 +109,9 @@ export const GalleryPhotoView = () => {
                 onScaleStart={onScaleStart}
                 onScaleEnd={onScaleEnd}
                 onDoubleTap={onDoubleTap}
-                style={colorScheme === 'dark' ?
-                    styles.galleryDark : styles.galleryLight}
+                style={colorScheme === 'dark' ? styles.galleryDark : styles.galleryLight}
             />
-        </View>
+        </ThemedView>
     );
 };
 
