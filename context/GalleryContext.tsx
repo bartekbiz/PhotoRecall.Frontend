@@ -1,6 +1,10 @@
 import {createContext, useContext, useState} from "react";
+import usePhotos from "@/hooks/usePhotos";
+
 
 export const GalleryContext = createContext({
+    galleryAssets: [],
+    isPhotosPermission: false,
     isBottomToTop: true,
     setBottomToTop: (value: boolean) => {
     },
@@ -17,11 +21,14 @@ export const useGallery = () => {
 };
 
 export const GalleryProvider = ({children}: { children: React.ReactNode; }) => {
+    const {galleryAssets, isPhotosPermission} = usePhotos();
     const [isBottomToTop, setIsBottomToTop] = useState(true);
     const [paddingTop, setPaddingTop] = useState(0);
     const [isInPhotoMode, setIsInPhotoMode] = useState(false);
 
     const value = {
+        galleryAssets,
+        isPhotosPermission,
         isBottomToTop,
         setBottomToTop: (value: boolean) => setIsBottomToTop(value),
         paddingTop,
@@ -31,6 +38,7 @@ export const GalleryProvider = ({children}: { children: React.ReactNode; }) => {
     };
 
     return (
+        //@ts-ignore
         <GalleryContext.Provider value={value}>
             {children}
         </GalleryContext.Provider>

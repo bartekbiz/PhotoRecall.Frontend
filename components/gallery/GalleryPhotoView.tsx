@@ -4,7 +4,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {StatusBar, StyleSheet, useColorScheme, View,} from 'react-native';
 import AwesomeGallery, {GalleryRef, RenderItemInfo,} from 'react-native-awesome-gallery';
 import {Image} from 'expo-image';
-import {NavParams} from "@/constants/Types";
+import {GalleryAsset, NavParams} from "@/constants/Types";
 import * as Haptics from "expo-haptics";
 import {Colors} from "@/constants/Colors";
 import {useTabBar} from "@/context/TabBarContext";
@@ -27,7 +27,7 @@ const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ path: string }
 
 export const GalleryPhotoView = () => {
     const colorScheme = useColorScheme() ?? 'light';
-    const {isInPhotoMode, setIsInPhotoMode} = useGallery()
+    const {setIsInPhotoMode} = useGallery()
     const {showTabBar, hideTabBar} = useTabBar();
     const {setParams, goBack} = useNavigation<NavigationProp<NavParams, 'GalleryPhotoView'>>();
     const isFocused = useIsFocused();
@@ -96,7 +96,7 @@ export const GalleryPhotoView = () => {
         <ThemedView style={styles.container}>
             <AwesomeGallery
                 ref={gallery}
-                data={params.images.map((path: any) => ({path}))}
+                data={params.assets.map((asset: GalleryAsset) => ({path: asset.localUri}))}
                 keyExtractor={(item) => item.path}
                 renderItem={renderItem}
                 initialIndex={params.index}

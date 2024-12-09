@@ -2,26 +2,18 @@ import * as React from 'react';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {Dimensions, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {Image} from 'expo-image';
-import type {NavParams} from '@/constants/Types';
+import type {GalleryAsset, NavParams} from '@/constants/Types';
 import {ThemedView} from "@/components/ThemedView";
 import Animated, {useAnimatedRef} from "react-native-reanimated";
 import {useBottomTabOverflow} from "@/components/ui/TabBarBackground";
 import {useGallery} from "@/context/GalleryContext";
+import {ThemedText} from "@/components/ThemedText";
 
-const getRandomSize = function () {
-    const min = 1000;
-    const max = 2000;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const images = new Array(40)
-    .fill(0)
-    .map(() => `https://picsum.photos/${getRandomSize()}/${getRandomSize()}`);
 
 const {height} = Dimensions.get('window');
 
 export const GalleryHome = () => {
-    const {isBottomToTop, paddingTop, setIsInPhotoMode} = useGallery()
+    const {isBottomToTop, paddingTop, galleryAssets} = useGallery()
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const bottom = useBottomTabOverflow();
     const {navigate} = useNavigation<NavigationProp<NavParams>>();
@@ -32,35 +24,53 @@ export const GalleryHome = () => {
         }
     };
 
-    const onPress = (index: number, images: string[]) => {
-        navigate('GalleryPhotoView', {index, images});
+    const onPress = (index: number, assets: GalleryAsset[]) => {
+        navigate('GalleryPhotoView', {index, assets});
     };
 
     return (
-        <ThemedView style={styles.container}>
-            <Animated.ScrollView
-                ref={scrollRef}
-                scrollEventThrottle={16}
-                scrollIndicatorInsets={{bottom}}
-                contentContainerStyle={{paddingBottom: bottom}}
-                onContentSizeChange={onContentSizeChange}
-            >
-                <ThemedView style={[
-                    styles.content,
-                    isBottomToTop ? styles.contentBottomToTop : styles.contentTopToBottom,
-                    isBottomToTop ? {paddingBottom: paddingTop} : {paddingTop: paddingTop}
-                ]}>
-                    {images.map((path, index) => (
-                        <TouchableWithoutFeedback
-                            key={path}
-                            onPress={() => onPress(index, images)}
-                        >
-                            <Image source={path} style={styles.image}/>
-                        </TouchableWithoutFeedback>
-                    ))}
+        <>
+            {galleryAssets !== undefined ?
+                <ThemedView style={styles.container}>
+                    <Animated.ScrollView
+                        ref={scrollRef}
+                        scrollEventThrottle={16}
+                        scrollIndicatorInsets={{bottom}}
+                        contentContainerStyle={{paddingBottom: bottom}}
+                        onContentSizeChange={onContentSizeChange}
+                    >
+                        <ThemedView style={[
+                            styles.content,
+                            isBottomToTop ? styles.contentBottomToTop : styles.contentTopToBottom,
+                            isBottomToTop ? {paddingBottom: paddingTop} : {paddingTop: paddingTop}
+                        ]}>
+                            {galleryAssets.map((asset: GalleryAsset, index) => {
+                                let uri = asset.localUri;
+
+                                return (
+                                    <TouchableWithoutFeedback
+                                        key={uri}
+                                        onPress={() => onPress(index, galleryAssets)}
+                                    >
+                                        <Image
+                                            source={uri}
+                                            style={[styles.image,
+                                                {height: (height / galleryAssets.length) *
+                                                        (galleryAssets.length / 10) * 1.5}
+                                            ]}
+                                        />
+                                    </TouchableWithoutFeedback>
+                                );
+                            })}
+                        </ThemedView>
+                    </Animated.ScrollView>
                 </ThemedView>
-            </Animated.ScrollView>
-        </ThemedView>
+                :
+                <ThemedView style={styles.loadingContainer}>
+                    <ThemedText>Loading...</ThemedText>
+                </ThemedView>
+            }
+        </>
     );
 };
 
@@ -70,7 +80,6 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '32.99%',
-        height: (height / images.length) * (images.length / 10) * 1.5,
     },
     content: {
         flex: 1,
@@ -88,4 +97,10 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         paddingBottom: 36,
     },
+    loadingContainer: {
+        width: '100%',
+        height: '100%',
+        justifyContent: "center",
+        alignItems: "center",
+    }
 });
