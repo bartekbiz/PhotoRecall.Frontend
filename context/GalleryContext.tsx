@@ -1,5 +1,6 @@
-import {createContext, useContext, useState} from "react";
-import usePhotos from "@/hooks/usePhotos";
+import {createContext, useContext, useEffect, useState} from "react";
+import usePhotos from "@/hooks/useUserPhotos";
+import {GalleryAsset} from "@/constants/Types";
 
 
 export const GalleryContext = createContext({
@@ -14,6 +15,9 @@ export const GalleryContext = createContext({
     isInPhotoMode: false,
     setIsInPhotoMode: (value: boolean) => {
     },
+    filter: [],
+    setFilter: (value: number[]) => {
+    },
 });
 
 export const useGallery = () => {
@@ -25,9 +29,30 @@ export const GalleryProvider = ({children}: { children: React.ReactNode; }) => {
     const [isBottomToTop, setIsBottomToTop] = useState(true);
     const [paddingTop, setPaddingTop] = useState(0);
     const [isInPhotoMode, setIsInPhotoMode] = useState(false);
+    const [filter, setFilter] = useState<number[]>();
+    const [filteredGalleryAssets, setFilteredGalleryAssets] = useState<GalleryAsset[]>([]);
+
+    useEffect(() => {
+        if (galleryAssets === undefined) return;
+
+        if (filter === undefined) {
+            setFilteredGalleryAssets(galleryAssets);
+            return;
+        }
+
+        setFilteredGalleryAssets(galleryAssets.filter((a) => {
+            for (let i = 0; i < filter.length; i++) {
+                if (a.classes.includes(filter[i])) {
+                    return true;
+                }
+            }
+
+            return false;
+        }));
+    }, [galleryAssets, filter]);
 
     const value = {
-        galleryAssets,
+        galleryAssets: filteredGalleryAssets,
         isPhotosPermission,
         isBottomToTop,
         setBottomToTop: (value: boolean) => setIsBottomToTop(value),
@@ -35,6 +60,8 @@ export const GalleryProvider = ({children}: { children: React.ReactNode; }) => {
         setPaddingTop: (number: number) => setPaddingTop(number),
         isInPhotoMode,
         setIsInPhotoMode: (value: boolean) => setIsInPhotoMode(value),
+        filter,
+        setFilter,
     };
 
     return (

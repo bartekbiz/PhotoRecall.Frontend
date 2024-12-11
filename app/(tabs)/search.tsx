@@ -21,7 +21,6 @@ export default function SearchScreenWrapper() {
 }
 
 function SearchScreen() {
-    const [search, setSearch] = useState('');
     const {setBottomToTop, setPaddingTop, isInPhotoMode} = useGallery();
 
     useEffect(() => {
@@ -44,6 +43,11 @@ function SearchScreen() {
 
 function SearchTitle() {
     const [search, setSearch] = useState('');
+    const {setFilter} = useGallery();
+
+    useEffect(() => {
+        setFilter([1]);
+    }, [search]);
 
     return (
         <ThemedView style={styles.titleContainer}>
