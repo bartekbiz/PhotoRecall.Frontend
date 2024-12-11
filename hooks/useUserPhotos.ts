@@ -4,7 +4,7 @@ import {useStorage} from "@/hooks/useStorage";
 import {GalleryAsset} from "@/constants/Types";
 
 
-export default function usePhotos() {
+export default function useUserPhotos() {
     const albumName: string = "Test";
     const storageKey: string = "assets";
     const {storeDataJSON, getDataJSON} = useStorage();
@@ -26,7 +26,7 @@ export default function usePhotos() {
     useEffect(() => {
         getDataJSON(storageKey)
             .then((storedAssets) => {
-                if ((storedAssets === null || storedAssets != galleryAssets)
+                if ((storedAssets === null || storedAssets !== galleryAssets)
                     && (galleryAssets !== null && galleryAssets !== undefined)) {
 
                     storeDataJSON(storageKey, galleryAssets).then();
@@ -37,7 +37,7 @@ export default function usePhotos() {
     async function getGalleryAssets() {
         getDataJSON(storageKey)
             .then((storedAssets) => {
-                if (storedAssets === null) {
+                if (storedAssets === null || storedAssets !== galleryAssets) {
                     getAssets(albumName)
                         .then((a) => {
                             if (a !== null) setGalleryAssets(a);
@@ -73,12 +73,18 @@ export default function usePhotos() {
     async function getAssetInfo(id: string) {
         let res = await MediaLibrary.getAssetInfoAsync(id)
 
-        let asset: GalleryAsset ={
-            localUri: res['localUri'] ?? "",
-        }
+        let localUri = res['localUri'] ?? "";
+        let photoName = localUri.split("/").at(-1) ?? "";
 
-        return asset
+        let asset: GalleryAsset = {
+            name: photoName,
+            localUri: localUri,
+            classes: [],
+            processedBy: []
+        };
+
+        return asset;
     }
 
-    return {galleryAssets, isPhotosPermission}
+    return {galleryAssets, setGalleryAssets, isPhotosPermission}
 }

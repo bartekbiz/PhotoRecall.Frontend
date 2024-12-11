@@ -10,6 +10,14 @@ export type DropdownItemType = {
 }
 
 export type GalleryAsset = {
-    localUri: string
+    name: string,
+    localUri: string,
+    classes: number[],
+    processedBy: string[],
+}
+
+export type PredictionResult = {
+    class: number,
+    name: string
 }
 
