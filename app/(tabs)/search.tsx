@@ -11,6 +11,7 @@ import {GalleryProvider, useGallery} from "@/context/GalleryContext";
 import {ThemedView} from "@/components/ThemedView";
 import {BlurView} from "expo-blur";
 import {BlurStyles} from "@/constants/Common"
+import useSearch from "@/hooks/useSearch";
 
 export default function SearchScreenWrapper() {
     return (
@@ -44,9 +45,24 @@ function SearchScreen() {
 function SearchTitle() {
     const [search, setSearch] = useState('');
     const {setFilter} = useGallery();
+    const {getSearchResult} = useSearch();
 
     useEffect(() => {
-        setFilter([1]);
+        if (search == '') {
+            setFilter([-1])
+            return;
+        }
+
+        getSearchResult(search)
+            .then(res => {
+                if (res === undefined || res.length === 0) return;
+                console.log(res)
+                setFilter(res);
+            })
+            .catch(error => {
+                console.log(error)
+                setFilter([-1]);
+            });
     }, [search]);
 
     return (
