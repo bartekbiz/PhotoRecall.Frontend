@@ -14,6 +14,7 @@ export type GalleryAsset = {
     localUri: string,
     classes: number[],
     processedBy: string[],
+    isProcessed: boolean
 }
 
 export type PredictionResult = {
