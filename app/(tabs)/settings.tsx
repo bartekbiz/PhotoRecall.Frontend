@@ -5,15 +5,25 @@ import {ThemedText} from '@/components/ThemedText';
 import {ThemedView} from '@/components/ThemedView';
 import {useSettings} from "@/context/SettingsContext";
 import React from "react";
-import Dropdown from "@/components/Dropdown/Dropdown";
+import ThemedDropdown from "@/components/Dropdown/ThemedDropdown";
 import ThemedButton from "@/components/ThemedButton";
+import ThemedSlider from "@/components/ThemedSlider";
 
 
 export default function SettingsScreen() {
-    const {themesDropdown, setThemesDropdown, models, setModels, setRefreshAssets} = useSettings();
+    const {
+        themesDropdown, setThemesDropdown,
+        models, setModels,
+        setRefreshAssets,
+        agreeRatio, setAgreeRatio
+    } = useSettings();
 
     const onRefresh = () => {
         setRefreshAssets(true);
+    }
+
+    const onAgreeRatioSlide = (value: number) => {
+        setAgreeRatio(Math.round(value));
     }
 
     return (
@@ -22,24 +32,32 @@ export default function SettingsScreen() {
                 <ThemedText type="title">Settings</ThemedText>
             </ThemedView>
 
-            <ThemedButton
-                onPress={onRefresh}
-                title="Refresh Assets"
-            />
-
-            <Dropdown
+            <ThemedDropdown
                 items={models}
                 setItems={setModels}
                 title={"Yolo models"}
                 isMultiselect={true}
             />
 
-            <Dropdown
-                items={themesDropdown}
-                setItems={setThemesDropdown}
-                title={"App theme"}
-                isMultiselect={false}
+            <ThemedSlider
+                title={`Agree ratio: ${agreeRatio}%`}
+                min={0}
+                max={100}
+                onValueChange={onAgreeRatioSlide}
+                value={agreeRatio}
             />
+
+            <ThemedButton
+                onPress={onRefresh}
+                title="Refresh Assets"
+            />
+
+            {/*<ThemedDropdown*/}
+            {/*    items={themesDropdown}*/}
+            {/*    setItems={setThemesDropdown}*/}
+            {/*    title={"App theme"}*/}
+            {/*    isMultiselect={false}*/}
+            {/*/>*/}
         </ParallaxScrollView>
     );
 }
