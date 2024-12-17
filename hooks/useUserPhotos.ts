@@ -2,7 +2,6 @@ import * as MediaLibrary from 'expo-media-library';
 import {useEffect, useState} from "react";
 import {useStorage} from "@/hooks/useStorage";
 import {GalleryAsset} from "@/constants/Types";
-import { NativeEventEmitter } from 'react-native';
 
 
 export default function useUserPhotos() {
@@ -31,6 +30,8 @@ export default function useUserPhotos() {
         else {
             await getGalleryAssets();
         }
+
+        setFinishedRefreshing(true);
     }
 
     async function getGalleryAssets() {
@@ -61,8 +62,6 @@ export default function useUserPhotos() {
             newAssets.push(userAssets[i]);
         }
         setGalleryAssets(newAssets);
-
-        setFinishedRefreshing(true);
     }
 
     async function getAssets(albumName: string) {

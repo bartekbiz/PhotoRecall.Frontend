@@ -8,23 +8,21 @@ export type usePhotosAIProps = {
     setAssetProcessed: (localUri: string, isProcessed: boolean) => void;
     selectedModels: string[],
     finishedRefreshing: boolean;
+    agreeRatio: number
 }
 
-export default function usePhotosAI(
-    {galleryAssets, updateSingleGalleryAsset, setAssetProcessed, selectedModels, finishedRefreshing}: usePhotosAIProps) {
+export default function usePhotosAI({galleryAssets,
+        updateSingleGalleryAsset, setAssetProcessed,
+        selectedModels, finishedRefreshing, agreeRatio}: usePhotosAIProps) {
 
     useEffect(() => {
         if (!finishedRefreshing) return;
-        console.log("AI triggered!");
         processAssets().then()
     }, [finishedRefreshing]);
 
-    useEffect(() => {
-        processAssets().then()
-    }, [selectedModels]);
-
     async function processAssets() {
         if (galleryAssets === undefined) return;
+        console.log("AI processing triggered!");
 
         for (let i = 0; i < galleryAssets.length; i++) {
             if (CompareArrays(galleryAssets[i].processedBy, selectedModels, true) ||
@@ -56,7 +54,7 @@ export default function usePhotosAI(
             type: photo.type,
         });
 
-        // formData.append("AgreeRatio", "0.0");
+        formData.append("AgreeRatio", `${agreeRatio}`);
 
         if (selectedModels.length > 0) {
             formData.append("YoloModels", JSON.stringify(selectedModels));
