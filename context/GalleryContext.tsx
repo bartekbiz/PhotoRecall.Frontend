@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import usePhotos from "@/hooks/useUserPhotos";
 import {GalleryAsset} from "@/constants/Types";
+import {usePhotos} from "@/context/PhotosContext";
 
 
 export const GalleryContext = createContext({
@@ -40,7 +40,7 @@ export const GalleryProvider = ({children}: { children: React.ReactNode; }) => {
             return;
         }
 
-        setFilteredGalleryAssets(galleryAssets.filter((a) => {
+        setFilteredGalleryAssets(galleryAssets.filter((a: GalleryAsset) => {
             for (let i = 0; i < filter.length; i++) {
                 if (a.classes.includes(filter[i])) {
                     return true;
