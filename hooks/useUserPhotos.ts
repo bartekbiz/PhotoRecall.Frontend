@@ -2,56 +2,74 @@ import * as MediaLibrary from 'expo-media-library';
 import {useEffect, useState} from "react";
 import {useStorage} from "@/hooks/useStorage";
 import {GalleryAsset} from "@/constants/Types";
+import { NativeEventEmitter } from 'react-native';
 
 
 export default function useUserPhotos() {
-    const albumName: string = "Test";
-    const storageKey: string = "assets";
+    const albumName: string = 'PhotoRecall';
+    const storageKey: string = 'assets';
     const {storeDataJSON, getDataJSON} = useStorage();
 
     const [isPhotosPermission, requestPermission] = MediaLibrary.usePermissions();
-
     const [galleryAssets, setGalleryAssets] = useState<GalleryAsset[]>();
+    const [finishedRefreshing, setFinishedRefreshing] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!isPhotosPermission) {
-            requestPermission()
-                .then(() => getGalleryAssets());
-        }
-        else {
-            getGalleryAssets().then();
-        }
+        refreshGalleryAssets().then()
     }, []);
 
     useEffect(() => {
-        getDataJSON(storageKey)
-            .then((storedAssets) => {
-                if ((storedAssets === null || storedAssets !== galleryAssets)
-                    && (galleryAssets !== null && galleryAssets !== undefined)) {
-
-                    storeDataJSON(storageKey, galleryAssets).then();
-                }
-            });
+        if (galleryAssets !== null && galleryAssets !== undefined) {
+            storeDataJSON(storageKey, galleryAssets).then();
+        }
     }, [galleryAssets]);
 
+    async function refreshGalleryAssets() {
+        if (!isPhotosPermission) {
+            await requestPermission().then(() => getGalleryAssets());
+        }
+        else {
+            await getGalleryAssets();
+        }
+    }
+
     async function getGalleryAssets() {
-        getDataJSON(storageKey)
-            .then((storedAssets) => {
-                if (storedAssets === null || storedAssets !== galleryAssets) {
-                    getAssets(albumName)
-                        .then((a) => {
-                            if (a !== null) setGalleryAssets(a);
-                        })
-                }
-                else {
-                    setGalleryAssets(storedAssets);
-                }
-            });
+        setFinishedRefreshing(false);
+
+        let storedAssets: GalleryAsset[] | null = await getDataJSON(storageKey);
+        let userAssets = await getAssets(albumName);
+
+        if (storedAssets === null) {
+            if (userAssets !== null) setGalleryAssets(userAssets);
+            return;
+        }
+
+        if (userAssets === null) {
+            setGalleryAssets([]);
+            return;
+        }
+
+        let newAssets: GalleryAsset[] = [];
+        for (let i = 0; i < userAssets.length; i++) {
+            let foundIndex = storedAssets.findIndex(f => f.localUri === userAssets[i].localUri);
+
+            if (foundIndex !== -1) {
+                newAssets.push(storedAssets[foundIndex]);
+                continue;
+            }
+
+            newAssets.push(userAssets[i]);
+        }
+        setGalleryAssets(newAssets);
+
+        setFinishedRefreshing(true);
     }
 
     async function getAssets(albumName: string) {
+        let album = await MediaLibrary.getAlbumAsync(albumName)
+
         const assetsAlbum = await MediaLibrary.getAssetsAsync(
-            {album: albumName, mediaType: 'photo'}
+            {album: album, mediaType: 'photo'}
         )
 
         if (assetsAlbum === undefined || assetsAlbum == null)
@@ -80,11 +98,12 @@ export default function useUserPhotos() {
             name: photoName,
             localUri: localUri,
             classes: [],
-            processedBy: []
+            processedBy: [],
+            isProcessed: false,
         };
 
         return asset;
     }
 
-    return {galleryAssets, setGalleryAssets, isPhotosPermission}
+    return {refreshGalleryAssets, finishedRefreshing, galleryAssets, setGalleryAssets, isPhotosPermission}
 }
