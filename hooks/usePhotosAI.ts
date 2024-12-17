@@ -1,38 +1,49 @@
 import {GalleryAsset, PredictionResult} from "@/constants/Types";
 import {useEffect} from "react";
+import {CompareArrays} from "@/utils/Utils";
 
 export type usePhotosAIProps = {
     galleryAssets: GalleryAsset[] | undefined;
-    setGalleryAssets: React.Dispatch<React.SetStateAction<GalleryAsset[] | undefined>>;
-    selectedModels: string[]
+    updateSingleGalleryAsset: (updatedAsset: GalleryAsset) => void;
+    setAssetProcessed: (localUri: string, isProcessed: boolean) => void;
+    selectedModels: string[],
+    finishedRefreshing: boolean;
 }
 
-export default function usePhotosAI({galleryAssets, setGalleryAssets, selectedModels}: usePhotosAIProps) {
+export default function usePhotosAI(
+    {galleryAssets, updateSingleGalleryAsset, setAssetProcessed, selectedModels, finishedRefreshing}: usePhotosAIProps) {
+
     useEffect(() => {
+        if (!finishedRefreshing) return;
+        console.log("AI triggered!");
+        processAssets().then()
+    }, [finishedRefreshing]);
+
+    useEffect(() => {
+        processAssets().then()
+    }, [selectedModels]);
+
+    async function processAssets() {
         if (galleryAssets === undefined) return;
 
         for (let i = 0; i < galleryAssets.length; i++) {
-            if (galleryAssets[i].processedBy === selectedModels) {
+            if (CompareArrays(galleryAssets[i].processedBy, selectedModels, true) ||
+                galleryAssets[i].isProcessed) {
                 continue;
             }
 
+            setAssetProcessed(galleryAssets[i].localUri, true);
+
             fetchPredictions(galleryAssets[i])
                 .then((res) => {
-                    //console.log(`Image name: ${res.name}, Detected classes: [${res.classes}], Processed: [${res.processedBy}]`);
+                    console.log(`${i}. Detected classes: [${res.classes}], Processed: [${res.processedBy}]`);
 
-                    setGalleryAssets(current => {
-                        if (current === undefined) return;
-
-                        return current
-                            .map(a => {
-                                if (a.localUri === res.localUri)
-                                    a.classes = res.classes;
-                                return a;
-                            })
-                    });
+                    updateSingleGalleryAsset(res);
                 })
+
+            setAssetProcessed(galleryAssets[i].localUri, false);
         }
-    }, [selectedModels]);
+    }
 
     async function fetchPredictions(galleryAsset: GalleryAsset) {
         let photo = await getFile(galleryAsset.localUri);
@@ -48,7 +59,6 @@ export default function usePhotosAI({galleryAssets, setGalleryAssets, selectedMo
         // formData.append("AgreeRatio", "0.0");
 
         if (selectedModels.length > 0) {
-            //console.log(`Selected models: ${selectedModels}`);
             formData.append("YoloModels", JSON.stringify(selectedModels));
         }
 
