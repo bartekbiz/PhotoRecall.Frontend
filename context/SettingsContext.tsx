@@ -3,6 +3,7 @@ import {AppTheme} from "@/constants/Enums";
 import {useAppTheme} from "@/hooks/useAppTheme";
 import {DropdownItemType} from "@/constants/Types";
 import {useAIModels} from "@/hooks/useAIModels";
+import useAgreeRatio from "@/hooks/useAgreeRatio";
 
 export const SettingsContext = createContext({
     theme: AppTheme.system,
@@ -12,7 +13,9 @@ export const SettingsContext = createContext({
     models: [{title: '', value: '', selected: false}],
     setModels: (value: DropdownItemType[]) => {},
     refreshAssets: false,
-    setRefreshAssets: (value: boolean) => {}
+    setRefreshAssets: (value: boolean) => {},
+    agreeRatio: 0,
+    setAgreeRatio: (value: number) => {}
 });
 
 export const useSettings = () => {
@@ -23,6 +26,7 @@ export const SettingsProvider = ({children}: { children: React.ReactNode; }) => 
     const {theme, setTheme, themesDropdown, setThemesDropdown} = useAppTheme();
     const {models, setModels} = useAIModels();
     const [refreshAssets, setRefreshAssets] = useState<boolean>(false);
+    const {agreeRatio, setAgreeRatio} = useAgreeRatio();
 
     const value = {
         theme,
@@ -32,7 +36,9 @@ export const SettingsProvider = ({children}: { children: React.ReactNode; }) => 
         models,
         setModels,
         refreshAssets,
-        setRefreshAssets
+        setRefreshAssets,
+        agreeRatio,
+        setAgreeRatio,
     };
 
     return (
