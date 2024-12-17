@@ -17,6 +17,7 @@ export const Colors = {
         tabIconSelected: tintColorLight,
         border: '#ECEDEE',
         field: '#E9ECEF',
+        pressed: '#b5bbbd',
         divider: '#b5bbbd',
     },
     dark: {
@@ -28,6 +29,7 @@ export const Colors = {
         tabIconDefault: '#9BA1A6',
         tabIconSelected: tintColorDark,
         field: '#282b2b',
+        pressed: '#505151',
         divider: '#505151',
     },
 };
