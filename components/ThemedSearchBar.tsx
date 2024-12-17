@@ -13,14 +13,9 @@ export type ThemedSearchBarProps = {
 export default function ThemedSearchBar({search, setSearch, additionalStyles, otherProps}: ThemedSearchBarProps) {
     const colorScheme = useColorScheme() ?? 'light';
 
-    const updateSearch = (text: string) => {
-        setSearch(text);
-    };
-
     return (
         <SearchBar
-            // @ts-ignore
-            onChangeText={updateSearch}
+            onChangeText={setSearch}
             value={search}
             platform="default"
             containerStyle={[styles.searchContainer, additionalStyles]}
