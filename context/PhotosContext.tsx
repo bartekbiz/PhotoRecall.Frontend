@@ -16,19 +16,24 @@ export const usePhotos = () => {
 };
 
 export const PhotosProvider = ({children}: { children: React.ReactNode; }) => {
-    const {models, refreshAssets, setRefreshAssets} = useSettings()
+    const {models, refreshAssets, setRefreshAssets, agreeRatio} = useSettings()
 
     const {refreshGalleryAssets, finishedRefreshing,
         galleryAssets, setGalleryAssets, isPhotosPermission} = useUserPhotos();
 
     const [selectedModels, setSelectedModels] = useState<string[]>(["yolo11x.pt"])
 
-    usePhotosAI({galleryAssets, updateSingleGalleryAsset, setAssetProcessed, selectedModels, finishedRefreshing});
+    usePhotosAI({galleryAssets,
+        updateSingleGalleryAsset, setAssetProcessed,
+        selectedModels,
+        finishedRefreshing,
+        agreeRatio
+    });
 
     useEffect(() => {
         if (!refreshAssets) return;
-        console.log("Assets refreshed!");
         refreshGalleryAssets();
+        console.log("Assets refresh triggered!");
         setRefreshAssets(false);
     }, [refreshAssets]);
 
