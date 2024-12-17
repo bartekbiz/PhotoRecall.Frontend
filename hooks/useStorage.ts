@@ -5,6 +5,7 @@ export const useStorage = () => {
         try {
             await AsyncStorage.setItem(key, value);
         } catch (e) {
+            console.log(`Error saving data: ${e}`)
         }
     };
 
@@ -13,6 +14,7 @@ export const useStorage = () => {
             const jsonValue = JSON.stringify(value);
             await AsyncStorage.setItem(key, jsonValue);
         } catch (e) {
+            console.log(`Error saving data: ${e}`)
         }
     };
 
@@ -24,8 +26,8 @@ export const useStorage = () => {
             }
         }
         catch (e) {
+            console.log(`Error getting data: ${e}`)
         }
-
         return null;
     };
 
@@ -34,8 +36,8 @@ export const useStorage = () => {
             const jsonString = await AsyncStorage.getItem(key);
             return jsonString != null ? JSON.parse(jsonString) : null;
         } catch (e) {
+            console.log(`Error getting data: ${e}`)
         }
-
         return null;
     };
 
