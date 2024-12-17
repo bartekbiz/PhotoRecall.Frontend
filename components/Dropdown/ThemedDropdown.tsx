@@ -21,7 +21,7 @@ export type DropdownBaseProps = {
     isMultiselect: boolean;
 };
 
-export default function Dropdown({items, setItems, title, isMultiselect}: DropdownBaseProps) {
+export default function ThemedDropdown({items, setItems, title, isMultiselect}: DropdownBaseProps) {
     const colorScheme = useColorScheme() ?? 'light';
 
     const {
