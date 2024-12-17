@@ -1,18 +1,18 @@
-import {createContext, useContext} from "react";
+import {createContext, useContext, useState} from "react";
 import {AppTheme} from "@/constants/Enums";
 import {useAppTheme} from "@/hooks/useAppTheme";
 import {DropdownItemType} from "@/constants/Types";
-import {useYoloModels} from "@/hooks/useYoloModels";
+import {useAIModels} from "@/hooks/useAIModels";
 
 export const SettingsContext = createContext({
     theme: AppTheme.system,
     setTheme: (value: AppTheme) => {},
     themesDropdown: [{title: '', value: '', selected: false}],
     setThemesDropdown: (value: DropdownItemType[]) => {},
-    yoloModels: [''],
-    setYoloModels: (value: string[]) => {},
-    yoloModelsDropdown: [{title: '', value: '', selected: false}],
-    setYoloModelsDropdown: (value: DropdownItemType[]) => {},
+    models: [{title: '', value: '', selected: false}],
+    setModels: (value: DropdownItemType[]) => {},
+    refreshAssets: false,
+    setRefreshAssets: (value: boolean) => {}
 });
 
 export const useSettings = () => {
@@ -21,17 +21,18 @@ export const useSettings = () => {
 
 export const SettingsProvider = ({children}: { children: React.ReactNode; }) => {
     const {theme, setTheme, themesDropdown, setThemesDropdown} = useAppTheme();
-    const {yoloModels, setYoloModels, yoloModelsDropdown, setYoloModelsDropdown} = useYoloModels();
+    const {models, setModels} = useAIModels();
+    const [refreshAssets, setRefreshAssets] = useState<boolean>(false);
 
     const value = {
         theme,
         setTheme,
         themesDropdown,
         setThemesDropdown,
-        yoloModels,
-        setYoloModels,
-        yoloModelsDropdown,
-        setYoloModelsDropdown
+        models,
+        setModels,
+        refreshAssets,
+        setRefreshAssets
     };
 
     return (
