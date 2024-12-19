@@ -1,22 +1,33 @@
-import {Button, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import {ThemedText} from '@/components/ThemedText';
 import {ThemedView} from '@/components/ThemedView';
 import {useSettings} from "@/context/SettingsContext";
-import React from "react";
-import ThemedDropdown from "@/components/Dropdown/ThemedDropdown";
+import React, {useEffect, useState} from "react";
+import ItemsDropdown from "@/components/dropdown/ItemsDropdown";
 import ThemedButton from "@/components/ThemedButton";
 import ThemedSlider from "@/components/ThemedSlider";
+import {usePhotos} from "@/context/PhotosContext";
 
 
 export default function SettingsScreen() {
     const {
         themesDropdown, setThemesDropdown,
         models, setModels,
+        refreshAssets,
         setRefreshAssets,
         agreeRatio, setAgreeRatio
     } = useSettings();
+    const {galleryAssets} = usePhotos()
+
+    const [processedLength, setProcessedLength] = useState(0);
+    const [length, setLength] = useState(0);
+
+    useEffect(() => {
+        setProcessedLength(galleryAssets.filter(a => !a.isProcessed).length);
+        setLength(galleryAssets.length);
+    }, [galleryAssets]);
 
     const onRefresh = () => {
         setRefreshAssets(true);
@@ -32,7 +43,7 @@ export default function SettingsScreen() {
                 <ThemedText type="title">Settings</ThemedText>
             </ThemedView>
 
-            <ThemedDropdown
+            <ItemsDropdown
                 items={models}
                 setItems={setModels}
                 title={"Yolo models"}
@@ -52,12 +63,15 @@ export default function SettingsScreen() {
                 title="Refresh Assets"
             />
 
-            {/*<ThemedDropdown*/}
-            {/*    items={themesDropdown}*/}
-            {/*    setItems={setThemesDropdown}*/}
-            {/*    title={"App theme"}*/}
-            {/*    isMultiselect={false}*/}
-            {/*/>*/}
+            {(processedLength !== length) ?
+                <ThemedText>
+                    Photos are being processed: {processedLength}/{length}.
+                </ThemedText>
+                :
+                <ThemedText>
+                    Processing is done.
+                </ThemedText>
+            }
         </ParallaxScrollView>
     );
 }
