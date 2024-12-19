@@ -32,4 +32,7 @@ export const Colors = {
         pressed: '#505151',
         divider: '#505151',
     },
+    common: {
+        warning: '#f45d5d'
+    }
 };
