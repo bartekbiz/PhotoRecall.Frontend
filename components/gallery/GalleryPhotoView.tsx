@@ -1,7 +1,7 @@
 import {NavigationProp, RouteProp, useIsFocused, useNavigation, useRoute,} from '@react-navigation/native';
 import * as React from 'react';
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {StatusBar, StyleSheet, useColorScheme, View,} from 'react-native';
+import {StatusBar, StyleSheet, useColorScheme} from 'react-native';
 import AwesomeGallery, {GalleryRef, RenderItemInfo,} from 'react-native-awesome-gallery';
 import {Image} from 'expo-image';
 import {GalleryAsset, NavParams} from "@/constants/Types";
@@ -10,6 +10,8 @@ import {Colors} from "@/constants/Colors";
 import {useTabBar} from "@/context/TabBarContext";
 import {useGallery} from "@/context/GalleryContext";
 import {ThemedView} from "@/components/ThemedView";
+import GalleryDropdown from "@/components/gallery/dropdown/GalleryDropdown";
+
 
 const renderItem = ({item, setImageDimensions,}: RenderItemInfo<{ path: string }>) => {
     return (
@@ -93,25 +95,31 @@ export const GalleryPhotoView = () => {
     }
 
     return (
-        <ThemedView style={styles.container}>
-            <AwesomeGallery
-                ref={gallery}
-                data={params.assets.map((asset: GalleryAsset) => ({path: asset.localUri}))}
-                keyExtractor={(item) => item.path}
-                renderItem={renderItem}
-                initialIndex={params.index}
-                numToRender={3}
-                doubleTapInterval={150}
-                onIndexChange={onIndexChange}
-                onSwipeToClose={onClose}
-                onTap={onTap}
-                loop
-                onScaleStart={onScaleStart}
-                onScaleEnd={onScaleEnd}
-                onDoubleTap={onDoubleTap}
-                style={colorScheme === 'dark' ? styles.galleryDark : styles.galleryLight}
-            />
-        </ThemedView>
+        <>
+            {!isFocusMode &&
+                <GalleryDropdown asset={params.assets[params.index]}/>
+            }
+
+            <ThemedView style={styles.container}>
+                <AwesomeGallery
+                    ref={gallery}
+                    data={params.assets.map((asset: GalleryAsset) => ({path: asset.localUri}))}
+                    keyExtractor={(item) => item.path}
+                    renderItem={renderItem}
+                    initialIndex={params.index}
+                    numToRender={3}
+                    doubleTapInterval={150}
+                    onIndexChange={onIndexChange}
+                    onSwipeToClose={onClose}
+                    onTap={onTap}
+                    loop
+                    onScaleStart={onScaleStart}
+                    onScaleEnd={onScaleEnd}
+                    onDoubleTap={onDoubleTap}
+                    style={colorScheme === 'dark' ? styles.galleryDark : styles.galleryLight}
+                />
+            </ThemedView>
+        </>
     );
 };
 
