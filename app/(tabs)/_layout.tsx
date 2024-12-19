@@ -1,6 +1,5 @@
 import React from 'react';
 import {useColorScheme} from '@/hooks/useColorScheme';
-import {useTabBar} from "@/context/TabBarContext";
 import {Colors} from "@/constants/Colors";
 import {HapticTab} from "@/components/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
@@ -8,6 +7,7 @@ import {Platform} from "react-native";
 import {Tabs} from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import TabBar from "@/components/ui/TabBar";
+import {IconStyles} from "@/constants/Common";
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
@@ -35,7 +35,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Photos',
                     tabBarIcon: ({color}) =>
-                        <MaterialIcons name="photo-library" size={24} color={color}/>,
+                        <MaterialIcons name="photo-library" size={IconStyles.normal.fontSize} color={color}/>,
                 }}
             />
             <Tabs.Screen
@@ -43,7 +43,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Search',
                     tabBarIcon: ({color}) =>
-                        <MaterialIcons name="image-search" size={24} color={color}/>,
+                        <MaterialIcons name="image-search" size={IconStyles.normal.fontSize} color={color}/>,
                 }}
             />
             <Tabs.Screen
@@ -51,7 +51,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Settings',
                     tabBarIcon: ({color}) =>
-                        <MaterialIcons name="settings" size={24} color={color}/>,
+                        <MaterialIcons name="settings" size={IconStyles.normal.fontSize} color={color}/>,
                 }}
             />
         </Tabs>
