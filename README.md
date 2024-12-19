@@ -48,24 +48,28 @@ This app has been **tested only on iOS**. Other platforms may require additional
 
 Displays the main gallery interface for browsing photos. Allows to zoom the photos, view them in focus mode (all icons hidden except for the photo), show information about them. Automatically updates as new photos are taken.
 
-<img src="readme/app_photos.PNG" alt="app_photos" width="300"/>
-
-<img src="readme/app_details.PNG" alt="app_details" width="300"/>
+<div style="display: flex; justify-content: space-around;">
+  <img src="readme/app_photos.PNG" alt="app_photos" width="300"/>
+  <img src="readme/app_details.PNG" alt="app_details" width="300"/>
+</div>
 
 ### 2. **Search View**
 
 Enables photo search functionality, leveraging AI predictions for better accuracy.
 
-<img src="readme/app_search_1.PNG" alt="app_search_1" width="300"/>
-
-<img src="readme/app_search_2.PNG" alt="app_search_2" width="300"/>
+<div style="display: flex; justify-content: space-around;">
+    <img src="readme/app_search_1.PNG" alt="app_search_1" width="300"/>
+    <img src="readme/app_search_2.PNG" alt="app_search_2" width="300"/>
+</div>
 
 ### 3. **Settings**
 
 Manage app settings, including themes and preferences.
 
-<img src="readme/app_settings.PNG" alt="app_settings" width="300"/>
-<img src="readme/app_settings_light.PNG" alt="app_settings_light" width="300"/>
+<div style="display: flex; justify-content: space-around;">
+    <img src="readme/app_settings.PNG" alt="app_settings" width="300"/>
+    <img src="readme/app_settings_light.PNG" alt="app_settings_light" width="300"/>
+</div>
 
 ## API Integration
 
