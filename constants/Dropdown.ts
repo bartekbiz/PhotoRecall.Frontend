@@ -9,5 +9,7 @@ export const dropdownStyles = StyleSheet.create({
         height: FieldStyles.common.height,
         paddingHorizontal: 18,
     },
-
+    optional: {
+        paddingVertical: 11,
+    }
 })
