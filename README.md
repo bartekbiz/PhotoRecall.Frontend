@@ -46,7 +46,7 @@ This app has been **tested only on iOS**. Other platforms may require additional
 
 ### 1. **Gallery Home**
 
-Displays the main gallery interface for browsing photos. Allows to zoom the photos, view them in focus mode (all icons hidden except for the photo), show information about them. Automatically updates as new photos are taken.
+Displays the main gallery interface for browsing photos. Allows to zoom the photos, view them in focus mode and show information about them.
 
 <div style="display: flex; justify-content: space-around;">
   <img src="readme/app_photos.PNG" alt="app_photos" width="300"/>
@@ -55,7 +55,7 @@ Displays the main gallery interface for browsing photos. Allows to zoom the phot
 
 ### 2. **Search View**
 
-Enables photo search functionality, leveraging AI predictions for better accuracy.
+Enables photo search based on their content.
 
 <div style="display: flex; justify-content: space-around;">
     <img src="readme/app_search_1.PNG" alt="app_search_1" width="300"/>
@@ -64,7 +64,7 @@ Enables photo search functionality, leveraging AI predictions for better accurac
 
 ### 3. **Settings**
 
-Manage app settings, including themes and preferences.
+Provides users with application settings, including model preferences.
 
 <div style="display: flex; justify-content: space-around;">
     <img src="readme/app_settings.PNG" alt="app_settings" width="300"/>
