@@ -62,7 +62,7 @@ export const PhotosProvider = ({children}: { children: React.ReactNode; }) => {
 
             return current.map(a => {
                 if (a.localUri === localUri)
-                    a.isProcessed = isProcessed;
+                    a.isBeingProcessed = isProcessed;
                 return a;
             });
         });

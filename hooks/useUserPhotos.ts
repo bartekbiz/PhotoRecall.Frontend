@@ -99,7 +99,7 @@ export default function useUserPhotos() {
             classes: [],
             classNames: [],
             processedBy: [],
-            isProcessed: false,
+            isBeingProcessed: false,
         };
 
         return asset;

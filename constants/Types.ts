@@ -15,7 +15,7 @@ export type GalleryAsset = {
     classes: number[],
     classNames: string[],
     processedBy: string[],
-    isProcessed: boolean
+    isBeingProcessed: boolean
 }
 
 export type PredictionResult = {
