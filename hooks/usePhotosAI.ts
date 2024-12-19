@@ -26,7 +26,7 @@ export default function usePhotosAI({galleryAssets,
 
         for (let i = 0; i < galleryAssets.length; i++) {
             if (CompareArrays(galleryAssets[i].processedBy, selectedModels, true) ||
-                galleryAssets[i].isProcessed) {
+                galleryAssets[i].isBeingProcessed) {
                 continue;
             }
 
@@ -34,10 +34,9 @@ export default function usePhotosAI({galleryAssets,
 
             fetchPredictions(galleryAssets[i])
                 .then((res) => {
-                    console.log(`${i}. Detected classes: [${res.classNames}], Processed: [${res.processedBy}]`);
-
+                    console.log(`${i}. Detected: [${res.classNames}], Processed by: [${res.processedBy}]`);
+                    res.isBeingProcessed = false;
                     updateSingleGalleryAsset(res);
-                    setAssetProcessed(galleryAssets[i].localUri, false);
                 });
         }
     }
