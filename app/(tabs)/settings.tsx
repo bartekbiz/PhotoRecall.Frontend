@@ -25,7 +25,7 @@ export default function SettingsScreen() {
     const [length, setLength] = useState(0);
 
     useEffect(() => {
-        setProcessedLength(galleryAssets.filter(a => !a.isProcessed).length);
+        setProcessedLength(galleryAssets.filter(a => !a.isBeingProcessed).length);
         setLength(galleryAssets.length);
     }, [galleryAssets]);
 
