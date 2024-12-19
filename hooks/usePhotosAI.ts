@@ -34,12 +34,11 @@ export default function usePhotosAI({galleryAssets,
 
             fetchPredictions(galleryAssets[i])
                 .then((res) => {
-                    console.log(`${i}. Detected classes: [${res.classes}], Processed: [${res.processedBy}]`);
+                    console.log(`${i}. Detected classes: [${res.classNames}], Processed: [${res.processedBy}]`);
 
                     updateSingleGalleryAsset(res);
-                })
-
-            setAssetProcessed(galleryAssets[i].localUri, false);
+                    setAssetProcessed(galleryAssets[i].localUri, false);
+                });
         }
     }
 
@@ -77,8 +76,8 @@ export default function usePhotosAI({galleryAssets,
             .then((body) => {
                 try {
                     let object: PredictionResult[] = JSON.parse(body);
-                    galleryAsset.classes = object.map((p) => p.class);
-
+                    galleryAsset.classes = object.map(p => p.class);
+                    galleryAsset.classNames = object.map(p => p.name);
                     galleryAsset.processedBy = selectedModels.length === 0 ? ["all"] : selectedModels;
                 }
                 catch {

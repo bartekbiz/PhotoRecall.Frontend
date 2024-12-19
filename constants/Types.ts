@@ -13,6 +13,7 @@ export type GalleryAsset = {
     name: string,
     localUri: string,
     classes: number[],
+    classNames: string[],
     processedBy: string[],
     isProcessed: boolean
 }

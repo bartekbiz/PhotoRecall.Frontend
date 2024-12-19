@@ -65,7 +65,7 @@ export const PhotosProvider = ({children}: { children: React.ReactNode; }) => {
                     a.isProcessed = isProcessed;
                 return a;
             });
-        })
+        });
     }
 
     const value = {

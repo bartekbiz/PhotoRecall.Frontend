@@ -97,6 +97,7 @@ export default function useUserPhotos() {
             name: photoName,
             localUri: localUri,
             classes: [],
+            classNames: [],
             processedBy: [],
             isProcessed: false,
         };
