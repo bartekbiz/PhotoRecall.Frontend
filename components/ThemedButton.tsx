@@ -10,10 +10,12 @@ import * as Haptics from "expo-haptics";
 export type ThemedButtonProps = TextProps & {
     title: string;
     onPress?: () => void;
+    roundCorners?: boolean;
+    titleColor?: string;
     otherProps?: any;
 };
 
-export default function ThemedButton({title, onPress, otherProps}: ThemedButtonProps) {
+export default function ThemedButton({title, onPress, roundCorners = true, titleColor, otherProps}: ThemedButtonProps) {
     const colorScheme = useColorScheme() ?? 'light';
     const [touchStart, setTouchStart] = useState<boolean>(false);
 
@@ -35,12 +37,13 @@ export default function ThemedButton({title, onPress, otherProps}: ThemedButtonP
                 {backgroundColor: colorScheme === 'dark' ?
                         touchStart ? Colors.dark.pressed : Colors.dark.field
                         :
-                        touchStart ? Colors.light.pressed : Colors.light.field}
+                        touchStart ? Colors.light.pressed : Colors.light.field},
+                !roundCorners && {borderRadius: 'none'}
             ]}
             onTouchEnd={onTouchEnd}
             onTouchStart={onTouchStart}
             {...otherProps}
-        ><ThemedText>{title}</ThemedText>
+        ><ThemedText style={titleColor && {color: titleColor}}>{title}</ThemedText>
         </ThemedView>
     );
 }
