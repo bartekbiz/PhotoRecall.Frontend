@@ -1,55 +1,80 @@
-# Welcome to your Expo app 👋
+# PhotoRecall.Frontend
 
-This is an [Expo](https://expo.dev) project created with [
-`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**PhotoRecall.Frontend** is a React Native app developed as part of the larger **PhotoRecall** project. This project aims to create an intelligent gallery app that uses AI features for interacting with photo collections.
 
-## Get started
+## Features
+- **Gallery Navigation**: Enables users to easily browse, view, and zoom in on their photos.
+- **Automatic Photo Fetching**: Automatically syncs with the user's camera roll to retrieve photos as they are taken.
+- **AI Photo Recognition**: Recognizes objects in photos using various models, allowing users to choose the type of model they want to use and configure them as needed.
+- **Smart Search Algorithm**: Enables users to search photos based on their content, including using synonyms of class names.
+- **Themed Views**: Offers both light and dark themes to enhance the user experience.
 
-1. Install dependencies
+## Compatibility
 
-   ```bash
-   npm install
-   ```
+This app has been **tested only on iOS**. Other platforms may require additional testing or configuration.
 
-2. Start the app
+## Installation and Running
 
-   ```bash
-    npx expo start
-   ```
+1.  **Clone the Repository**
 
-In the output, you'll find options to open the app in a
+    ```bash
+    git clone https://github.com/bartekbiz/PhotoRecall.Frontend.git  
+    cd PhotoRecall.Frontend
+    ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2.  **Install Dependencies**  
+    Ensure you have `node` and `npm` installed. Then run:
 
-You can start developing by editing the files inside the **app** directory. This project
-uses [file-based routing](https://docs.expo.dev/router/introduction).
+    ```bash
+    npm install  
+    ```
 
-## Get a fresh project
+3.  **Start the App**  
+    Start the Expo development server:
 
-When you're ready, run:
+    ```bash
+    npx expo start  
+    ```
+    In the output, you'll find options to open the app in a:
+    - [development build](https://docs.expo.dev/develop/development-builds/introduction/),
+    - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/),
+    - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/),
+    - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo.
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you
-can start developing.
+## Available Views
 
-## Learn more
+### 1. **Gallery Home**
 
-To learn more about developing your project with Expo, look at the following resources:
+Displays the main gallery interface for browsing photos. Allows to zoom the photos, view them in focus mode (all icons hidden except for the photo), show information about them. Automatically updates as new photos are taken.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with
-  our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll
-  create a project that runs on Android, iOS, and the web.
+<img src="readme/app_photos.PNG" alt="app_photos" width="300"/>
 
-## Join the community
+<img src="readme/app_details.PNG" alt="app_details" width="300"/>
 
-Join our community of developers creating universal apps.
+### 2. **Search View**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Enables photo search functionality, leveraging AI predictions for better accuracy.
+
+<img src="readme/app_search_1.PNG" alt="app_search_1" width="300"/>
+
+<img src="readme/app_search_2.PNG" alt="app_search_2" width="300"/>
+
+### 3. **Settings**
+
+Manage app settings, including themes and preferences.
+
+<img src="readme/app_settings.PNG" alt="app_settings" width="300"/>
+<img src="readme/app_settings_light.PNG" alt="app_settings_light" width="300"/>
+
+## API Integration
+
+This app communicates with the [PhotoRecall.API](https://github.com/bartekbiz/PhotoRecall.API) for:
+
+- Getting predictions for photos.
+- Fetching list of available AI models.
+- Getting advanced search results with support for class synonyms.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 or later. See LICENSE to see the full text.
