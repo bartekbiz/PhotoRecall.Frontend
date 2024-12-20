@@ -58,8 +58,8 @@ Displays the main gallery interface for browsing photos. Allows to zoom the phot
 Enables photo search based on their content.
 
 <div style="display: flex; justify-content: space-around;">
-    <img src="readme/app_search_1.PNG" alt="app_search_1" width="300"/>
-    <img src="readme/app_search_2.PNG" alt="app_search_2" width="300"/>
+    <img src="readme/app_search.PNG" alt="app_search_1" width="300"/>
+    <img src="readme/app_search_light.PNG" alt="app_search_2_light" width="300"/>
 </div>
 
 ### 3. **Settings**

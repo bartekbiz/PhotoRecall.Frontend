@@ -46,7 +46,7 @@ export default function SettingsScreen() {
             <ItemsDropdown
                 items={models}
                 setItems={setModels}
-                title={"Yolo models"}
+                title={"YOLO models"}
                 isMultiselect={true}
             />
 
@@ -60,7 +60,7 @@ export default function SettingsScreen() {
 
             <ThemedButton
                 onPress={onRefresh}
-                title="Refresh Assets"
+                title="Refresh assets"
             />
 
             {(processedLength !== length) ?
