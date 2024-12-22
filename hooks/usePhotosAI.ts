@@ -70,7 +70,8 @@ export default function usePhotosAI({galleryAssets,
 
         let result = galleryAsset;
 
-        await fetch("http://dev.bartekbiz.net:8080/api/Predictions/GetPredictionsAllDetectedAsync", requestOptions)
+        await fetch(`${process.env.EXPO_PUBLIC_API_URL}/Predictions/GetPredictionsAllDetectedAsync`,
+            requestOptions)
             .then((response) => response.text())
             .then((body) => {
                 try {

@@ -53,7 +53,7 @@ export const useAIModels = () => {
             redirect: "follow"
         };
 
-        return fetch("http://dev.bartekbiz.net:8080/api/Info/GetAllYoloModelsAsync", requestOptions)
+        return fetch(`${process.env.EXPO_PUBLIC_API_URL}/Info/GetAvailableYoloModels`, requestOptions)
             .then((response) => response.text())
             .then((result) => JSON.parse(result))
             .catch((error) => console.error(error));
