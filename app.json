@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PhotoRecall.Frontend",
-    "slug": "PhotoRecall.Frontend",
+    "name": "PhotoRecall",
+    "slug": "PhotoRecall",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -11,13 +11,18 @@
     "ios": {
       "infoPlist": {
         "NSPhotosUsageDescription": "You won't be able to use the app without this permission."
-      }
+      },
+      "bundleIdentifier": "com.bartekbiz.PhotoRecall"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -44,6 +49,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "be441e71-cb0e-4bbf-b057-a7dbb05f7fb2"
+      }
     }
   }
 }
