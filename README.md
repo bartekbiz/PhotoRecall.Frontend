@@ -29,7 +29,9 @@ This app has been **tested only on iOS**. Other platforms may require additional
     npm install  
     ```
 
-3.  **Start the App**  
+3. **Set correct values in .env file**
+
+4.  **Start the App**  
     Start the Expo development server:
 
     ```bash
