@@ -23,3 +23,8 @@ export type PredictionResult = {
     name: string
 }
 
+export type DetectionClass = {
+    class: number,
+    name: string
+}
+

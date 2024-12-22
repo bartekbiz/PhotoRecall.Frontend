@@ -49,21 +49,27 @@ function SearchTitle() {
 
     useEffect(() => {
         if (search == '') {
-            setFilter([-1])
+            setFilterNone();
             return;
         }
 
         getSearchResult(search)
             .then(res => {
-                if (res === undefined || res.length === 0) return;
-                console.log(res)
+                if (res.length === 0) {
+                    return;
+                }
+
+                console.log(`Search result: ${res}`);
                 setFilter(res);
             })
             .catch(error => {
-                console.log(error)
-                setFilter([-1]);
+                console.log(error);
             });
     }, [search]);
+
+    const setFilterNone = () => {
+        setFilter([-1]);
+    }
 
     return (
         <ThemedView style={styles.titleContainer}>
