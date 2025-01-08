@@ -41,7 +41,7 @@ export default function useSearch() {
             redirect: "follow"
         };
 
-        return await fetch(`${process.env.EXPO_PUBLIC_API_URL}/Search/GetYoloClassesAsync?` +
+        return await fetch(`${process.env.EXPO_PUBLIC_API_URL}/Search/GetDetectionClassesAsync?` +
             new URLSearchParams({phrase: phrase}), requestOptions)
             .then((response) => response.text())
             .then((result) => {
