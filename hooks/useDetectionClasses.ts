@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {DetectionClass} from "@/constants/Types";
+import "@/constants/EnpdointPaths";
+import {detectionClassesInfoPath} from "@/constants/EndpointPaths";
 
 
 export default function useDetectionClasses() {
@@ -15,7 +17,7 @@ export default function useDetectionClasses() {
             redirect: "follow"
         };
 
-        let classes: DetectionClass[] = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/Info/GetAllYoloClasses`,
+        let classes: DetectionClass[] = await fetch(`${process.env.EXPO_PUBLIC_API_URL}${detectionClassesInfoPath}`,
             requestOptions)
             .then((response) => response.text())
             .then((result) => {

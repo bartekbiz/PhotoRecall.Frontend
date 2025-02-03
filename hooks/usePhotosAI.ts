@@ -1,6 +1,7 @@
 import {GalleryAsset, PredictionResult} from "@/constants/Types";
 import {useEffect} from "react";
 import {CompareArrays} from "@/utils/Utils";
+import {mergedPredictionsPath} from "@/constants/EndpointPaths";
 
 export type usePhotosAIProps = {
     galleryAssets: GalleryAsset[] | undefined;
@@ -55,7 +56,7 @@ export default function usePhotosAI({galleryAssets,
         formData.append("AgreeRatio", `${agreeRatio}`);
 
         if (selectedModels.length > 0) {
-            formData.append("YoloModels", JSON.stringify(selectedModels));
+            formData.append("Models", JSON.stringify(selectedModels));
         }
 
         const requestOptions: RequestInit = {
@@ -70,7 +71,7 @@ export default function usePhotosAI({galleryAssets,
 
         let result = galleryAsset;
 
-        await fetch(`${process.env.EXPO_PUBLIC_API_URL}/Predictions/GetPredictionsAllDetectedAsync`,
+        await fetch(`${process.env.EXPO_PUBLIC_API_URL}${mergedPredictionsPath}`,
             requestOptions)
             .then((response) => response.text())
             .then((body) => {

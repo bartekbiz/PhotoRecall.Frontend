@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
-import {AppTheme} from "@/constants/Enums";
 import {useStorage} from "@/hooks/useStorage";
 import {DropdownItemType} from "@/constants/Types";
-import {ToTitleCase} from "@/utils/Utils";
+import {availableModelsInfoPath} from "@/constants/EndpointPaths";
 
 export const useAIModels = () => {
     const storageKey = "models";
@@ -53,7 +52,7 @@ export const useAIModels = () => {
             redirect: "follow"
         };
 
-        return fetch(`${process.env.EXPO_PUBLIC_API_URL}/Info/GetAvailableYoloModels`, requestOptions)
+        return fetch(`${process.env.EXPO_PUBLIC_API_URL}${availableModelsInfoPath}`, requestOptions)
             .then((response) => response.text())
             .then((result) => JSON.parse(result))
             .catch((error) => console.error(error));

@@ -1,5 +1,6 @@
 import {usePhotos} from "@/context/PhotosContext";
 import useDetectionClasses from "@/hooks/useDetectionClasses";
+import {detectionClassesSearchPath} from "@/constants/EndpointPaths";
 
 
 export default function useSearch() {
@@ -41,7 +42,7 @@ export default function useSearch() {
             redirect: "follow"
         };
 
-        return await fetch(`${process.env.EXPO_PUBLIC_API_URL}/Search/GetDetectionClassesAsync?` +
+        return await fetch(`${process.env.EXPO_PUBLIC_API_URL}${detectionClassesSearchPath}?` +
             new URLSearchParams({phrase: phrase}), requestOptions)
             .then((response) => response.text())
             .then((result) => {
